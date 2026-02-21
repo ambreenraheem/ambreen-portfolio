@@ -1,0 +1,1100 @@
+/* ============================================================
+   GLOBAL STYLESHEET — Deep Navy + Electric Teal Portfolio
+   ============================================================ */
+
+/* --- Google Fonts Import ---
+   Playfair Display: serif font for headings and hero name
+   Inter: sans-serif font for body text, labels, UI elements */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap');
+
+/* --- CSS Custom Properties (Design Tokens) ---
+   Centralized color, font, and spacing variables for the whole site */
+:root {
+    --bg-primary: #0A1628;
+    /* Deep Navy — main background */
+    --bg-secondary: #0F2044;
+    /* Dark Navy — secondary background areas */
+    --bg-card: #132952;
+    /* Navy Card — card backgrounds */
+    --accent: #00D4C8;
+    /* Electric Teal — primary accent */
+    --accent-glow: #00B4AA;
+    /* Teal Glow — secondary accent */
+    --text-primary: #FFFFFF;
+    /* White — main text color */
+    --text-secondary: #CBD5E1;
+    /* Soft White — secondary/muted text */
+    --border: #1E3A5F;
+    /* Muted Navy — borders and dividers */
+    --font-heading: 'Playfair Display', serif;
+    /* Heading font family */
+    --font-body: 'Inter', sans-serif;
+    /* Body font family */
+}
+
+/* --- Global Reset ---
+   Remove default Streamlit white background and force smooth scrolling */
+html,
+body,
+[data-testid="stAppViewContainer"],
+[data-testid="stApp"] {
+    background-color: var(--bg-primary) !important;
+    /* Force Deep Navy background */
+    color: var(--text-primary) !important;
+    /* Force white text */
+    font-family: var(--font-body) !important;
+    /* Apply Inter as default body font */
+    scroll-behavior: smooth;
+    /* Enable smooth scrolling site-wide */
+}
+
+
+/* --- Hide Streamlit Default Elements ---
+   Remove the default header, footer, and hamburger menu for a clean custom look */
+header[data-testid="stHeader"] {
+    background: transparent !important;
+    /* Make default Streamlit header invisible */
+}
+
+#MainMenu {
+    visibility: hidden;
+    /* Hide the Streamlit hamburger menu */
+}
+
+footer {
+    visibility: hidden;
+    /* Hide the "Made with Streamlit" footer */
+}
+
+/* --- Sidebar Styling ---
+   Style the Streamlit sidebar to match the Deep Navy theme */
+[data-testid="stSidebar"] {
+    background-color: var(--bg-secondary) !important;
+    /* Dark Navy sidebar background */
+    border-right: 2px solid var(--border) !important;
+    /* Muted Navy right border */
+}
+
+
+[data-testid="stSidebar"] .css-1d391kg {
+    padding-top: 2rem;
+    /* Add top padding inside sidebar for spacing */
+}
+
+/* ============================================================
+   NAVBAR — Fixed, Scroll-Aware Navigation Bar
+   ============================================================ */
+
+/* --- Navbar Base ---
+   Fixed at top, full width, flex layout for logo + links */
+.navbar {
+    position: fixed;
+    /* Pin navbar to top of viewport */
+    top: 0;
+    /* Align to very top edge */
+    left: 0;
+    /* Align to left edge */
+    width: 100%;
+    /* Span full viewport width */
+    z-index: 999;
+    /* Keep navbar above all other elements */
+    padding: 16px 40px;
+    /* Vertical and horizontal inner spacing */
+    display: flex;
+    /* Flexbox for horizontal layout */
+    justify-content: space-between;
+    /* Push logo left, links right */
+    align-items: center;
+    /* Vertically center items */
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    /* Smooth bg & shadow transition on scroll */
+    background: transparent;
+    /* Transparent on initial load (hero visible) */
+}
+
+/* --- Navbar Scrolled State ---
+   Applied via JavaScript when user scrolls past the hero section */
+.navbar.scrolled {
+    background: var(--bg-primary) !important;
+    /* Solid Deep Navy background on scroll */
+    border-bottom: 2px solid var(--accent) !important;
+    /* Teal bottom border for visual accent */
+    box-shadow: 0 4px 20px rgba(0, 212, 200, 0.15);
+    /* Subtle teal glow shadow below navbar */
+}
+
+/* --- Navbar Logo ---
+   Portfolio name/logo text in the navbar */
+.nav-logo {
+    font-family: var(--font-heading);
+    /* Playfair Display for the logo text */
+    font-size: 1.4rem;
+    /* Slightly larger than body text */
+    font-weight: 700;
+    /* Bold weight */
+    color: var(--accent);
+    /* Electric Teal color */
+    text-decoration: none;
+    /* Remove underline from link */
+}
+
+/* --- Navbar Links ---
+   Individual navigation link items */
+.nav-links a {
+    color: var(--text-primary);
+    /* White text color */
+    text-decoration: none;
+    /* No underline */
+    margin-left: 28px;
+    /* Space between each link */
+    font-family: var(--font-body);
+    /* Inter font */
+    font-size: 0.95rem;
+    /* Slightly smaller than body */
+    font-weight: 500;
+    /* Medium weight */
+    transition: color 0.3s ease;
+    /* Smooth color transition on hover */
+}
+
+.nav-links a:hover {
+    color: var(--accent);
+    /* Teal color on hover */
+}
+
+/* --- Mobile Hamburger Button ---
+   Visible only on screens narrower than 768px */
+.hamburger {
+    display: none;
+    /* Hidden by default on desktop */
+    font-size: 1.8rem;
+    /* Large hamburger icon size */
+    color: var(--text-primary);
+    /* White color */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    background: none;
+    /* No background */
+    border: none;
+    /* No border */
+}
+
+/* --- Mobile Menu Dropdown ---
+   Full-width dropdown that slides down on mobile when hamburger is clicked */
+.mobile-menu {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Fixed to viewport */
+    top: 60px;
+    /* Below the navbar */
+    left: 0;
+    /* Full width from left */
+    width: 100%;
+    /* Span full screen width */
+    background: var(--bg-primary);
+    /* Deep Navy background */
+    padding: 20px;
+    /* Inner spacing */
+    flex-direction: column;
+    /* Stack links vertically */
+    gap: 15px;
+    /* Space between links */
+    border-bottom: 2px solid var(--accent);
+    /* Teal bottom border */
+    z-index: 998;
+    /* Just below the navbar */
+}
+
+.mobile-menu a {
+    color: var(--text-primary);
+    /* White text for mobile links */
+    text-decoration: none;
+    /* No underline */
+    font-family: var(--font-body);
+    /* Inter font */
+    font-size: 1.1rem;
+    /* Slightly larger for touch targets */
+    padding: 8px 0;
+    /* Vertical padding for tap area */
+}
+
+.mobile-menu a:hover {
+    color: var(--accent);
+    /* Teal on hover/tap */
+}
+
+/* --- Mobile Responsive: Show Hamburger, Hide Desktop Links ---
+   On screens below 768px width */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+        /* Show hamburger button on mobile */
+    }
+
+    .nav-links {
+        display: none;
+        /* Hide desktop nav links on mobile */
+    }
+
+    .mobile-menu.active {
+        display: flex;
+        /* Show mobile dropdown when active */
+    }
+}
+
+/* ============================================================
+   HERO SECTION — Full Viewport Landing Area
+   ============================================================ */
+
+/* --- Hero Background with Dot-Grid Texture --- "From Home.py deleted"
+   Full viewport height, Deep Navy with subtle teal dots overlay */
+.hero-section {
+    min-height: 100vh;
+    /* Fill entire viewport height */
+    background-color: var(--bg-primary);
+    /* Deep Navy base color */
+    position: relative;
+    /* Position context for child elements */
+    display: flex;
+    /* Flexbox for centering content */
+    align-items: center;
+    /* Vertically center hero content */
+    padding: 100px 40px 60px;
+    /* Top padding accounts for fixed navbar */
+}
+
+/* --- Hero Dot-Grid Overlay ---
+   Very low opacity overlay so dots are barely visible (subtle texture) */
+.hero-section::before {
+    content: '';
+    /* Required for pseudo-element */
+    position: absolute;
+    /* Cover entire hero section */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Stretch to fill parent */
+    background-image: radial-gradient(var(--accent) 1px, transparent 1px);
+    /* Repeat dot pattern */
+    background-size: 30px 30px;
+    /* Match parent dot grid size */
+    opacity: 0.04;
+    /* Very faint — subtle texture only */
+    pointer-events: none;
+    /* Don't block clicks on content below */
+}
+
+/* --- Hero Container ---
+   Two-column flex layout: text on left, avatar on right */
+.hero-container {
+    max-width: 1200px;
+    /* Limit content width for readability */
+    margin: 0 auto;
+    /* Center horizontally */
+    display: flex;
+    /* Flex for two-column layout */
+    align-items: center;
+    /* Vertically center both columns */
+    justify-content: space-between;
+    /* Push text left, avatar right */
+    gap: 60px;
+    /* Space between columns */
+    width: 100%;
+    /* Full available width */
+    flex-wrap: wrap;
+    /* Wrap columns on small screens */
+}
+
+/* --- Hero Text Column (Left) ---
+   Contains role tag, name, tagline, buttons, social links */
+.hero-text {
+    flex: 1;
+    /* Take up available space */
+    min-width: 300px;
+    /* Minimum width before wrapping */
+}
+
+/* --- Role Label Tag ---
+   Small teal label above the name: "Data Analyst & Web App Developer" */
+.role-tag {
+    display: inline-block;
+    /* Inline element with block properties */
+    color: var(--accent);
+    /* Electric Teal text */
+    font-family: var(--font-body);
+    /* Inter font */
+    font-size: 0.85rem;
+    /* Small size */
+    font-weight: 600;
+    /* Semi-bold */
+    text-transform: uppercase;
+    /* All caps style */
+    letter-spacing: 2px;
+    /* Wide letter spacing for small-caps feel */
+    margin-bottom: 16px;
+    /* Space below before name */
+    border: 1px solid var(--accent);
+    /* Teal border around the tag */
+    padding: 6px 16px;
+    /* Inner spacing */
+    border-radius: 4px;
+    /* Slightly rounded corners */
+}
+
+/* --- Hero Name Heading ---
+   Large display name: "Ambreen Abdul Raheem" */
+.hero-name {
+    font-family: var(--font-heading);
+    /* Playfair Display serif font */
+    font-size: 3.5rem;
+    /* Very large display size */
+    font-weight: 900;
+    /* Extra bold weight */
+    color: var(--text-primary);
+    /* White text */
+    line-height: 1.1;
+    /* Tight line height */
+    margin-bottom: 16px;
+    /* Space below */
+}
+
+/* --- Hero Tagline ---
+   Subtitle below the name */
+.hero-tagline {
+    font-family: var(--font-body);
+    /* Inter font */
+    font-size: 1.15rem;
+    /* Slightly larger than body */
+    color: var(--text-secondary);
+    /* Soft White — muted appearance */
+    margin-bottom: 30px;
+    /* Space below before buttons */
+    line-height: 1.6;
+    /* Comfortable line height */
+}
+
+/* --- CTA Buttons Container ---
+   Holds the two call-to-action buttons side by side */
+.hero-buttons {
+    display: flex;
+    /* Flex layout for side-by-side buttons */
+    gap: 16px;
+    /* Space between buttons */
+    margin-bottom: 30px;
+    /* Space below before social links */
+    flex-wrap: wrap;
+    /* Wrap on small screens */
+}
+
+/* --- Primary CTA Button ---
+   "View My Work" — solid teal background */
+.btn-primary {
+    background: var(--accent);
+    /* Electric Teal fill */
+    color: var(--bg-primary);
+    /* Deep Navy text for contrast */
+    padding: 12px 28px;
+    /* Inner spacing */
+    border-radius: 8px;
+    /* Rounded corners */
+    font-family: var(--font-body);
+    /* Inter font */
+    font-weight: 600;
+    /* Semi-bold */
+    text-decoration: none;
+    /* No underline */
+    transition: all 0.3s ease;
+    /* Smooth transition on hover */
+    border: 2px solid var(--accent);
+    /* Teal border (matches background) */
+    cursor: pointer;
+    /* Pointer cursor */
+}
+
+.btn-primary:hover {
+    box-shadow: 0 0 20px rgba(0, 212, 200, 0.4);
+    /* Teal glow on hover */
+    transform: translateY(-2px);
+    /* Slight lift effect */
+}
+
+/* --- Secondary CTA Button ---
+   "Get In Touch" — transparent with teal border */
+.btn-secondary {
+    background: transparent;
+    /* No fill — ghost button style */
+    color: var(--accent);
+    /* Teal text */
+    padding: 12px 28px;
+    /* Inner spacing */
+    border-radius: 8px;
+    /* Rounded corners */
+    font-family: var(--font-body);
+    /* Inter font */
+    font-weight: 600;
+    /* Semi-bold */
+    text-decoration: none;
+    /* No underline */
+    transition: all 0.3s ease;
+    /* Smooth transition */
+    border: 2px solid var(--accent);
+    /* Teal border outline */
+    cursor: pointer;
+    /* Pointer cursor */
+}
+
+.btn-secondary:hover {
+    background: rgba(0, 212, 200, 0.1);
+    /* Very faint teal fill on hover */
+    box-shadow: 0 0 20px rgba(0, 212, 200, 0.3);
+    /* Teal glow */
+    transform: translateY(-2px);
+    /* Slight lift */
+}
+
+/* --- Social Links Row ---
+   Horizontal row of social media icon links below CTA buttons */
+.social-links {
+    display: flex;
+    /* Horizontal layout */
+    gap: 20px;
+    /* Space between icons */
+    margin-top: 10px;
+    /* Small top margin */
+}
+
+.social-links a {
+    color: var(--text-secondary);
+    /* Soft White default color */
+    font-size: 1.3rem;
+    /* Icon/text size */
+    text-decoration: none;
+    /* No underline */
+    transition: color 0.3s ease;
+    /* Smooth color change */
+}
+
+.social-links a:hover {
+    color: var(--accent);
+    /* Teal on hover */
+}
+
+/* --- Hero Avatar Column (Right) ---
+   Circular profile image with glowing teal ring */
+.hero-avatar {
+    flex: 0 0 320px;
+    /* Fixed width, don't grow or shrink */
+    display: flex;
+    /* Center the circle */
+    justify-content: center;
+    /* Horizontally center */
+    align-items: center;
+    /* Vertically center */
+}
+
+/* --- Avatar Circle with Glow Ring ---
+   Circular frame with animated teal pulsing border */
+.avatar-circle {
+    width: 280px;
+    /* Circle diameter */
+    height: 280px;
+    /* Must equal width for perfect circle */
+    border-radius: 50%;
+    /* Make it circular */
+    border: 4px solid var(--accent);
+    /* Teal border ring */
+    overflow: hidden;
+    /* Clip image to circle shape */
+    animation: glowPulse 2s ease-in-out infinite;
+    /* Continuous glow animation */
+    box-shadow: 0 0 30px rgba(0, 212, 200, 0.3);
+    /* Initial teal glow */
+}
+
+.avatar-circle img {
+    width: 100%;
+    /* Fill entire circle */
+    height: 100%;
+    /* Fill entire circle */
+    object-fit: cover;
+    /* Crop image to fill without distortion */
+}
+
+/* --- Glow Pulse Keyframe Animation ---
+   Makes the avatar ring pulse between dim and bright teal glow */
+@keyframes glowPulse {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 212, 200, 0.2);
+    }
+
+    /* Dim glow */
+    50% {
+        box-shadow: 0 0 40px rgba(0, 212, 200, 0.5);
+    }
+
+    /* Bright glow peak */
+    100% {
+        box-shadow: 0 0 20px rgba(0, 212, 200, 0.2);
+    }
+
+    /* Back to dim */
+}
+
+/* ============================================================
+   STATS BAR — Full Width Horizontal Strip Below Hero
+   ============================================================ */
+
+/* --- Stats Bar Container ---
+   Evenly spaced row of stat items on Deep Navy background */
+.stats-bar {
+    display: flex;
+    /* Horizontal flex layout */
+    justify-content: space-around;
+    /* Evenly distribute stats */
+    align-items: center;
+    /* Vertically center */
+    background: var(--bg-secondary);
+    /* Dark Navy background */
+    padding: 40px 20px;
+    /* Vertical and horizontal padding */
+    border-top: 1px solid var(--border);
+    /* Top border line */
+    border-bottom: 1px solid var(--border);
+    /* Bottom border line */
+    flex-wrap: wrap;
+    /* Wrap on small screens */
+    gap: 20px;
+    /* Gap when wrapping */
+}
+
+/* --- Individual Stat Item ---
+   Centered text block: big teal number + label below */
+.stat-item {
+    text-align: center;
+    /* Center number and label */
+    padding: 0 20px;
+    /* Horizontal padding */
+    border-right: 1px solid var(--border);
+    /* Thin teal divider between stats */
+}
+
+.stat-item:last-child {
+    border-right: none;
+    /* No divider after the last stat */
+}
+
+/* --- Stat Number ---
+   Large teal number (e.g., "4+", "20+") */
+.stat-number {
+    font-family: var(--font-heading);
+    /* Playfair Display */
+    font-size: 2.5rem;
+    /* Large number display */
+    font-weight: 700;
+    /* Bold */
+    color: var(--accent);
+    /* Electric Teal */
+}
+
+/* --- Stat Label ---
+   Description below the number (e.g., "Years of Experience") */
+.stat-label {
+    font-family: var(--font-body);
+    /* Inter font */
+    font-size: 0.9rem;
+    /* Small label size */
+    color: var(--text-secondary);
+    /* Soft White */
+    margin-top: 4px;
+    /* Small gap above */
+}
+
+/* ============================================================
+   TOOL CARDS — Tools & Technologies Section
+   ============================================================ */
+
+/* --- Section Heading ---
+   Styled heading for "Tools & Technologies" and similar sections */
+.section-heading {
+    font-family: var(--font-heading);
+    /* Playfair Display */
+    font-size: 2.2rem;
+    /* Large heading size */
+    font-weight: 700;
+    /* Bold */
+    color: var(--text-primary);
+    /* White */
+    text-align: center;
+    /* Centered */
+    margin: 60px 0 40px;
+    /* Top and bottom spacing */
+}
+
+/* --- Tool Cards Grid ---
+   Four cards in a single row, evenly spaced */
+.tool-cards {
+    display: flex;
+    /* Horizontal flex layout */
+    justify-content: center;
+    /* Center the row of cards */
+    gap: 24px;
+    /* Space between cards */
+    flex-wrap: wrap;
+    /* Wrap on small screens */
+    padding: 0 40px;
+    /* Horizontal page padding */
+    max-width: 1000px;
+    /* Limit grid width */
+    margin: 0 auto;
+    /* Center horizontally */
+}
+
+/* --- Individual Tool Card ---
+   Navy card with icon and label, teal glow on hover */
+.tool-card {
+    background: var(--bg-card);
+    /* Navy Card background */
+    border: 1px solid var(--border);
+    /* Muted Navy border */
+    border-radius: 12px;
+    /* Rounded corners */
+    padding: 30px 24px;
+    /* Inner spacing */
+    text-align: center;
+    /* Center icon and text */
+    flex: 1;
+    /* Equal width cards */
+    min-width: 180px;
+    /* Minimum card width */
+    max-width: 220px;
+    /* Maximum card width */
+    transition: all 0.3s ease;
+    /* Smooth hover transition */
+    cursor: default;
+    /* Default cursor */
+}
+
+.tool-card:hover {
+    box-shadow: 0 0 20px rgba(0, 212, 200, 0.3);
+    /* Teal glow on hover */
+    transform: translateY(-4px);
+    /* Lift effect on hover */
+    border-color: var(--accent);
+    /* Teal border on hover */
+}
+
+/* --- Tool Card Icon ---
+   Large centered icon/emoji */
+.tool-icon {
+    font-size: 2.5rem;
+    /* Large icon size */
+    margin-bottom: 12px;
+    /* Space below icon */
+}
+
+/* --- Tool Card Label ---
+   Name text below the icon */
+.tool-label {
+    font-family: var(--font-body);
+    /* Inter font */
+    font-size: 1rem;
+    /* Normal body size */
+    color: var(--text-primary);
+    /* White text */
+    font-weight: 500;
+    /* Medium weight */
+}
+
+/* ============================================================
+   CTA BANNER — Bottom of Home Page
+   ============================================================ */
+
+/* --- CTA Banner Container ---
+   Full-width strip with teal-to-navy gradient background */
+.cta-banner {
+    background: linear-gradient(135deg, var(--accent), var(--bg-secondary));
+    /* Teal to Navy gradient */
+    padding: 60px 40px;
+    /* Generous inner spacing */
+    text-align: center;
+    /* Center all text and button */
+    margin-top: 60px;
+    /* Top spacing from content above */
+}
+
+/* --- CTA Banner Heading ---
+   White text call-to-action message */
+.cta-banner h2 {
+    font-family: var(--font-heading);
+    /* Playfair Display */
+    font-size: 2rem;
+    /* Large heading */
+    color: var(--text-primary);
+    /* White text */
+    margin-bottom: 20px;
+    /* Space below before button */
+}
+
+/* --- CTA Banner Button ---
+   White button with navy text for high contrast */
+.cta-btn {
+    display: inline-block;
+    /* Inline block for padding */
+    background: var(--text-primary);
+    /* White background */
+    color: var(--bg-primary);
+    /* Deep Navy text */
+    padding: 14px 32px;
+    /* Inner spacing */
+    border-radius: 8px;
+    /* Rounded corners */
+    font-family: var(--font-body);
+    /* Inter font */
+    font-weight: 600;
+    /* Semi-bold */
+    text-decoration: none;
+    /* No underline */
+    transition: all 0.3s ease;
+    /* Smooth hover transition */
+}
+
+.cta-btn:hover {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    /* White glow on hover */
+    transform: translateY(-2px);
+    /* Slight lift */
+}
+
+/* ============================================================
+   PAGE CARDS — Generic Card Style for Projects, Blogs, etc.
+   ============================================================ */
+
+/* --- Standard Content Card ---
+   Reusable card style for projects, blogs, values, references */
+.content-card {
+    background: var(--bg-card);
+    /* Navy Card background */
+    border: 1px solid var(--border);
+    /* Muted Navy border */
+    border-radius: 12px;
+    /* Rounded corners */
+    padding: 28px;
+    /* Inner spacing */
+    transition: all 0.3s ease;
+    /* Smooth hover transition */
+    margin-bottom: 20px;
+    /* Space between stacked cards */
+}
+
+.content-card:hover {
+    box-shadow: 0 0 20px rgba(0, 212, 200, 0.3);
+    /* Teal glow on hover */
+    transform: translateY(-2px);
+    /* Slight lift */
+    border-color: var(--accent);
+    /* Teal border on hover */
+}
+
+/* --- Card Title ---
+   Heading inside a content card */
+.card-title {
+    font-family: var(--font-heading);
+    /* Playfair Display */
+    font-size: 1.3rem;
+    /* Medium heading */
+    color: var(--text-primary);
+    /* White */
+    margin-bottom: 12px;
+    /* Space below */
+}
+
+/* --- Card Description ---
+   Body text inside a content card */
+.card-desc {
+    font-family: var(--font-body);
+    /* Inter font */
+    font-size: 0.95rem;
+    /* Slightly smaller body text */
+    color: var(--text-secondary);
+    /* Soft White */
+    line-height: 1.6;
+    /* Comfortable reading height */
+}
+
+/* --- Card with Teal Left Border ---
+   Variant used for blog/session entries */
+.card-left-accent {
+    border-left: 4px solid var(--accent);
+    /* Teal left border accent */
+}
+
+/* --- Card with Teal Top Border ---
+   Variant used for values section cards */
+.card-top-accent {
+    border-top: 4px solid var(--accent);
+    /* Teal top border accent */
+}
+
+/* ============================================================
+   ABOUT PAGE — Bio, Timeline, Values, References
+   ============================================================ */
+
+/* --- Profile Image (About Page) ---
+   Circular photo with teal glowing border */
+.about-profile {
+    width: 250px;
+    /* Fixed size */
+    height: 250px;
+    /* Must equal width for circle */
+    border-radius: 50%;
+    /* Circular shape */
+    border: 4px solid var(--accent);
+    /* Teal border */
+    object-fit: cover;
+    /* Crop to fill circle */
+    box-shadow: 0 0 20px rgba(0, 212, 200, 0.3);
+    /* Teal glow */
+}
+
+/* --- Bio Text ---
+   Paragraph text styling for the bio section */
+.bio-text {
+    font-family: var(--font-body);
+    /* Inter font */
+    font-size: 1.05rem;
+    /* Slightly larger body text */
+    color: var(--text-secondary);
+    /* Soft White */
+    line-height: 1.8;
+    /* Comfortable line height for reading */
+}
+
+/* ============================================================
+   TIMELINE — Professional Journey (About Page)
+   ============================================================ */
+
+/* --- Timeline Container ---
+   Vertical timeline with teal line on the left side */
+.timeline {
+    position: relative;
+    /* Position context for the line and dots */
+    padding-left: 40px;
+    /* Space for the vertical line and dots */
+    margin: 40px 0;
+    /* Top and bottom spacing */
+}
+
+/* --- Vertical Teal Line ---
+   Continuous line running down the left side of the timeline */
+.timeline::before {
+    content: '';
+    /* Required for pseudo-element */
+    position: absolute;
+    /* Position relative to timeline container */
+    left: 12px;
+    /* Offset from left edge */
+    top: 0;
+    /* Start at top */
+    bottom: 0;
+    /* Extend to bottom */
+    width: 3px;
+    /* Line thickness */
+    background: var(--accent);
+    /* Electric Teal color */
+    border-radius: 2px;
+    /* Slightly rounded line */
+}
+
+/* --- Timeline Entry ---
+   A single event/milestone on the timeline */
+.timeline-item {
+    position: relative;
+    /* Position context for the dot */
+    margin-bottom: 40px;
+    /* Space between entries */
+    padding-left: 20px;
+    /* Space left of content, right of dot */
+}
+
+/* --- Timeline Dot ---
+   Glowing teal dot at each entry point on the line */
+.timeline-item::before {
+    content: '';
+    /* Required for pseudo-element */
+    position: absolute;
+    /* Position on the timeline line */
+    left: -34px;
+    /* Align with the vertical line */
+    top: 8px;
+    /* Align vertically with text */
+    width: 16px;
+    /* Dot diameter */
+    height: 16px;
+    /* Dot diameter */
+    border-radius: 50%;
+    /* Circular dot */
+    background: var(--accent);
+    /* Electric Teal fill */
+    box-shadow: 0 0 12px rgba(0, 212, 200, 0.5);
+    /* Teal glow around dot */
+}
+
+/* --- Timeline Year Label ---
+   Bold year text for each timeline entry */
+.timeline-year {
+    font-family: var(--font-heading);
+    /* Playfair Display */
+    font-size: 1.2rem;
+    /* Medium size */
+    color: var(--accent);
+    /* Electric Teal */
+    font-weight: 700;
+    /* Bold */
+    margin-bottom: 6px;
+    /* Space below */
+}
+
+/* --- Timeline Entry Card ---
+   Navy card beside each timeline dot with description text */
+.timeline-card {
+    background: var(--bg-card);
+    /* Navy Card background */
+    border: 1px solid var(--border);
+    /* Muted Navy border */
+    border-radius: 10px;
+    /* Rounded corners */
+    padding: 20px;
+    /* Inner spacing */
+}
+
+/* ============================================================
+   CONTACT FORM — Connect Page
+   ============================================================ */
+
+/* --- Form Input Fields ---
+   Text inputs and textarea styling for the contact form */
+.stTextInput>div>div>input,
+.stTextArea>div>div>textarea {
+    background: var(--bg-card) !important;
+    /* Navy Card background */
+    color: var(--text-primary) !important;
+    /* White text */
+    border: 1px solid var(--border) !important;
+    /* Muted Navy border */
+    border-radius: 8px !important;
+    /* Rounded corners */
+    font-family: var(--font-body) !important;
+    /* Inter font */
+}
+
+/* --- Form Input Focus State ---
+   Teal border when input is focused/active */
+.stTextInput>div>div>input:focus,
+.stTextArea>div>div>textarea:focus {
+    border-color: var(--accent) !important;
+    /* Teal border on focus */
+    box-shadow: 0 0 10px rgba(0, 212, 200, 0.2) !important;
+    /* Subtle teal glow on focus */
+}
+
+/* --- Streamlit Button Override ---
+   Style all Streamlit buttons to match the teal theme */
+.stButton>button {
+    background: var(--accent) !important;
+    /* Electric Teal background */
+    color: var(--bg-primary) !important;
+    /* Deep Navy text */
+    border: none !important;
+    /* No border */
+    border-radius: 8px !important;
+    /* Rounded corners */
+    font-family: var(--font-body) !important;
+    /* Inter font */
+    font-weight: 600 !important;
+    /* Semi-bold text */
+    padding: 10px 24px !important;
+    /* Inner spacing */
+    transition: all 0.3s ease !important;
+    /* Smooth hover transition */
+}
+
+.stButton>button:hover {
+    box-shadow: 0 0 20px rgba(0, 212, 200, 0.4) !important;
+    /* Teal glow on hover */
+    transform: translateY(-2px) !important;
+    /* Slight lift */
+}
+
+/* ============================================================
+   RESPONSIVE — Mobile-Friendly Adjustments
+   ============================================================ */
+
+/* --- Mobile Breakpoint: 768px and below --- */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 80px 20px 40px;
+        /* Reduce padding on mobile */
+    }
+
+    .hero-container {
+        flex-direction: column;
+        /* Stack columns vertically */
+        text-align: center;
+        /* Center-align text */
+    }
+
+    .hero-name {
+        font-size: 2.2rem;
+        /* Smaller heading on mobile */
+    }
+
+    .hero-buttons {
+        justify-content: center;
+        /* Center buttons */
+    }
+
+    .social-links {
+        justify-content: center;
+        /* Center social icons */
+    }
+
+    .hero-avatar {
+        flex: 0 0 auto;
+        /* Remove fixed width */
+        margin-top: 30px;
+        /* Add space above avatar */
+    }
+
+    .avatar-circle {
+        width: 200px;
+        /* Smaller avatar on mobile */
+        height: 200px;
+        /* Match width for circle */
+    }
+
+    .stats-bar {
+        flex-direction: column;
+        /* Stack stats vertically */
+    }
+
+    .stat-item {
+        border-right: none;
+        /* Remove vertical dividers */
+        border-bottom: 1px solid var(--border);
+        /* Add horizontal dividers instead */
+        padding-bottom: 20px;
+        /* Bottom padding */
+    }
+
+    .tool-cards {
+        padding: 0 20px;
+        /* Less horizontal padding */
+    }
+
+    .section-heading {
+        font-size: 1.6rem;
+        /* Smaller heading on mobile */
+    }
+}

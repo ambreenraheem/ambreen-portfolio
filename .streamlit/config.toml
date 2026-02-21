@@ -1,0 +1,7 @@
+# Streamlit theme configuration for Deep Navy + Electric Teal portfolio
+[theme]
+primaryColor = "#0759a7ff"            # Electric Teal — accent color for buttons, links, widgets
+backgroundColor = "#70a0e7ff"         # Deep Navy — main page background
+secondaryBackgroundColor = "#c1e3f0ff" # Dark Navy — sidebar and secondary area background
+textColor = "#f9faf3ec"               # White — primary text color across all pages
+font = "sans serif"                 # Default sans-serif font for Streamlit widgets
