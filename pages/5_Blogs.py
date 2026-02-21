@@ -54,19 +54,18 @@ st.markdown("""
 st.markdown("""
 <div class="content-card card-left-accent" style="max-width: 800px; margin: 0 auto 20px;">
     <!-- Session title — white text -->
-    <h3 class="card-title">Introduction to Power BI for Beginners</h3>
+    <h3 class="card-title">How I Turned Skills into a Freelance Career on Upwork</h3>
     <!-- Session date — teal colored, small text -->
     <p style="color: #00D4C8; font-family: 'Inter', sans-serif; font-size: 0.85rem; margin-bottom: 10px;">
-        📅 [Date] — [Location/Platform]
+        📅 [May-2025] — [Online Session available on YouTube Channel]
     </p>
     <!-- Session description — soft white text -->
     <p class="card-desc">
-        Conducted a hands-on session introducing Power BI fundamentals,
-        including data import, basic visualizations, and dashboard creation.
+        I shared my journey of building a freelance career on Upwork, from landing my first client to scaling my business. I discussed the strategies I used to find clients, deliver high-quality work, and build long-term relationships. I also shared tips on how to create a compelling profile, write winning proposals, and negotiate rates. 
     </p>
     <!-- Optional link to session recording or materials -->
-    <a href="#" style="color: #00D4C8; text-decoration: none; font-size: 0.9rem;">
-        View Details →
+    <a href="https://youtu.be/Z-PZZTe1vvk?si=to3USR2tFGACiFhl" style="color: #00D4C8; text-decoration: none; font-size: 0.9rem;">
+        Watch Session →
     </a>
 </div>
 """, unsafe_allow_html=True)  # Render session card HTML
@@ -75,16 +74,17 @@ st.markdown("""
 # Second placeholder session card — owner replaces with real content
 st.markdown("""
 <div class="content-card card-left-accent" style="max-width: 800px; margin: 0 auto 20px;">
-    <h3 class="card-title">Python for Data Analysis Workshop</h3>
+    <h3 class="card-title">Navigating Computer Science in the Age of AI</h3>
     <p style="color: #00D4C8; font-family: 'Inter', sans-serif; font-size: 0.85rem; margin-bottom: 10px;">
-        📅 [Date] — [Location/Platform]
+        📅 [January-2026] — [Physical Session at The Sufi Institute, Lauri Sharif, Sindh, Pakistan]
     </p>
     <p class="card-desc">
-        Led a workshop on using Python libraries (Pandas, NumPy, Matplotlib)
-        for data cleaning, analysis, and visualization.
+        A discussion on how AI is reshaping computer science education and careers, and how students can prepare for the future.
+        I shared my insights on the latest trends in AI, the skills that are in demand, and how students can leverage AI to enhance their learning and career prospects.
+        The session recording is available on YouTube.
     </p>
-    <a href="#" style="color: #00D4C8; text-decoration: none; font-size: 0.9rem;">
-        View Details →
+    <a href="https://youtu.be/Xi5YfJKhqsQ?si=4XxbNKtnYYfGCj9l" style="color: #00D4C8; text-decoration: none; font-size: 0.9rem;">
+        Watch Session →
     </a>
 </div>
 """, unsafe_allow_html=True)  # Render session card HTML
