@@ -78,7 +78,7 @@ with col1:
     # Clean short card
     st.markdown("""
     <div class="content-card">
-        <h3 class="card-title">SUPERSTORE SALES ANALYSIS</h3>
+        <h3 class="card-title">🛒 SUPERSTORE SALES ANALYSIS 🛍️</h3>
         <p class="card-desc">
             Power BI report analyzing sales trends, customer segments, and order 
             decline for a hypermarket — built in collaboration with 
@@ -120,7 +120,7 @@ with col1:
 with col2:
     st.markdown("""
     <div class="content-card">
-        <h3 class="card-title">365 BUSINESS BANK</h3>
+        <h3 class="card-title">🏦365 BUSINESS BANK💰</h3>
         <p class="card-desc">
             Power BI report analyzing the bank transactions of 365 Business Bank
             — built in collaboration with Crux International Canada.
@@ -257,10 +257,9 @@ with col4:
     <div class="content-card">
         <h3 class="card-title">🚲 Toronto Bike Share Station Status</h3>
         <p class="card-desc">
-            Toronto Bike Share is a bike-sharing system in Toronto, Ontario, Canada.
-            It is owned by the City of Toronto and operated by PBSC Urban Solutions.
-            The system has 6,893 bikes and 625 stations across the city.
-            Created in Streamlit and Python. Deployed on Hugging Face Spaces.
+        Real-time metrics on bike and dock availability interactive map showing all bike share stations,
+        find nearest bike station based on your location, Filter by bike type (e-bikes or mechanical bikes),
+        find nearest dock to return your bike, Route visualization with estimated walking time.
         </p>
         <a href="https://huggingface.co/spaces/ambreenraheem/Toronto_Bikeshare_app" class="btn-primary" style="
             display: inline-block;
@@ -275,17 +274,20 @@ with col4:
         st.markdown("""
         **Overview:**
 
-        Toronto Bike Share is a bike-sharing system in Toronto, Ontario, Canada.
+        Toronto Bike Share is a bike-sharing system in Toronto, Canada.
         It is owned by the City of Toronto and operated by PBSC Urban Solutions.
         The system has 6,893 bikes and 625 stations across the city. Created in Streamlit and Python. Deployed on Hugging Face Spaces.
 
         **Objective:**
-        The primary objective of this project is to develop an advanced fraud detection model that can accurately identify fraudulent taxi trips. By leveraging deep learning techniques, we aim to uncover complex patterns and anomalies indicative of fraudulent activities that may not be easily detectable through traditional methods. The model will be trained on historical trip data to learn the characteristics of both legitimate and fraudulent trips, enabling it to proactively flag suspicious transactions.
+        Real-time metrics on bike and dock availability, Interactive map showing all bike share stations,
+        Find nearest bike station based on your location, Filter by bike type (e-bikes or mechanical bikes),
+        Find nearest dock to return your bike, Route visualization with estimated walking time.
 
         **Key Features:**
-        - **Comprehensive Data Analysis:** Thorough exploration of trip data to understand distributions, correlations, and potential fraud indicators.
-        - **Advanced Feature Engineering:** Creation of meaningful features from raw data to enhance model performance.
-        - **Deep Learning Modeling:** Implementation of deep learning architectures to capture intricate patterns in the data.
-        - **Fraud Detection:** Development of a system to identify and flag potentially fraudulent taxi trips.
-        - **Performance Evaluation:** Rigorous testing and validation of the model to ensure accuracy and reliability.
+        - **Real-time metrics:** Get live updates on bike and dock availability across all stations.
+        - **Interactive map:** Explore all bike share stations on an interactive map interface.
+        - **Nearest station finder:** Quickly find the nearest bike station based on your current location.
+        - **Bike type filtering:** Easily filter stations to view e-bikes or mechanical bikes only.
+        - **Dock finder:** Locate the nearest dock to conveniently return the bike.    
+        - **Route visualization:** Plan your route with estimated walking times between stations.
         """)

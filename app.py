@@ -27,13 +27,28 @@ st.set_page_config(
 
 
 # Build the base64 data URI for the profile image
-# This embeds the actual Profile.jpeg from assets/ into the HTML
-profile_img_path = "assets/Profile.jpeg"  # Path to the real profile photo
-if os.path.exists(profile_img_path):  # Check the image file exists
-    profile_b64 = get_image_base64(profile_img_path)  # Encode image to base64
-    profile_src = f"data:image/jpeg;base64,{profile_b64}"  # Create data URI for HTML img src
-else:
-    profile_src = "https://via.placeholder.com/280x280/132952/00D4C8?text=AR"  # Fallback placeholder
+def load_profile_image(image_path, fallback_color="#132952"):
+    """Load image and return complete data URI (not just raw base64)."""
+    if not os.path.exists(image_path):
+        return f"https://via.placeholder.com/280x280/{fallback_color[1:]}/00D4C8?text=IMG"
+    
+    ext = os.path.splitext(image_path)[1].lower()
+    mime_map = {".png": "image/png", ".jpg": "image/jpeg", 
+                ".jpeg": "image/jpeg", ".gif": "image/gif", ".webp": "image/webp"}
+    mime = mime_map.get(ext, "image/jpeg")  # Extension se correct MIME type
+    
+    with open(image_path, "rb") as img_file:
+        b64 = base64.b64encode(img_file.read()).decode("utf-8")
+    
+    return f"data:{mime};base64,{b64}"  # ✅ Complete data URI return ho raha hai  # Fallback placeholder
+
+# --- Load Images ---
+# Load images from assets folder and convert to base64 for embedding
+profile_src = load_profile_image("assets/Profile.jpeg")
+image1_src = load_profile_image("assets/the_sufi_post.png")
+image2_src = load_profile_image("assets/nishat.jpeg")
+image3_src = load_profile_image("assets/The_Sufi_Institute1.jpeg")
+image4_src = load_profile_image("assets/crux_post.jpg")
 
 
 def load_css():
@@ -58,7 +73,7 @@ load_css()
 # It acts as a welcome/redirect to the Home page
 
 # Inject centered welcome message styled with the design system
-st.markdown("""
+st.markdown(f"""
 <div style="
     display: flex;
     flex-direction: column;
@@ -67,6 +82,7 @@ st.markdown("""
     min-height: 80vh;
     text-align: center;
 ">
+    <img src="{profile_src}" alt="Profile" style="width: 160px; height: 160px; border-radius: 50%; object-fit: cover; border: 2px solid #00D4C8; box-shadow: 0 8px 32px rgba(0, 212, 200, 0.3);" alt="Ambreen Abdul Raheem">
     <!-- Welcome heading using Playfair Display font in white -->
     <h1 style="
         font-family: 'Playfair Display', serif;
@@ -87,5 +103,39 @@ st.markdown("""
         color: #00D4C8;
         font-size: 1rem;
     ">Hi, I'm Ambreen Abdul Raheem. Want to explore my work?</p>
+    <!--2x2 image grid-->
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px;">
+<!-- Image-1 -->
+    <img src="{image1_src}" alt="The Sufi Post" style="
+    width: 600px; 
+    height: 300px; 
+    border-radius: 12px; 
+    object-fit: cover; 
+    border: 2px solid #1e3a5f; 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);">
+<!-- Image-2 -->    
+    <img src="{image2_src}" alt="Nishat" style="
+    width: 600px;
+    height: 300px;
+    border-radius: 12px; 
+    object-fit: cover; 
+    border: 2px solid #1e3a5f; 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);">
+<!-- Image-3 -->
+    <img src="{image3_src}" alt="The Sufi Institute" style="
+    width: 600px;
+    height: 300px; 
+    border-radius: 12px; 
+    object-fit: cover; 
+    border: 2px solid #1e3a5f; 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);">
+<!-- Image-4 -->
+    <img src="{image4_src}" alt="Crux Post" style="
+    width: 300px;
+    height: 300px; 
+    border-radius: 12px; 
+    object-fit: cover;
+    border: 2px solid #1e3a5f; 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);">
 </div>
 """, unsafe_allow_html=True)  # unsafe_allow_html allows raw HTML rendering

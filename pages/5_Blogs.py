@@ -57,7 +57,7 @@ st.markdown("""
     <h3 class="card-title">How I Turned Skills into a Freelance Career on Upwork</h3>
     <!-- Session date — teal colored, small text -->
     <p style="color: #00D4C8; font-family: 'Inter', sans-serif; font-size: 0.85rem; margin-bottom: 10px;">
-        📅 [May-2025] — [Online Session available on YouTube Channel]
+        📅 [May-2025] — [Online Session with CRUX INTERNATIONAL CANADA]
     </p>
     <!-- Session description — soft white text -->
     <p class="card-desc">
