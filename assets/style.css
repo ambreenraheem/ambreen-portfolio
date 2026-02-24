@@ -1,4 +1,16 @@
 /* ============================================================
+   Now I have everything I need. I'll rewrite the entire responsive section of your style.css with proper Bootstrap-style breakpoints and a comment on every single line.Ran 2 commands, created a file, read a fileRan 2 commands, created a file, read a fileCopy uploaded fileScriptCreating full style.css with improved responsive sectionstyle.cssCopy to outputsScriptPresented fileDoneHere's your updated style.css with a full 5-breakpoint Bootstrap-inspired system. Replace your old file in the assets/ folder with this one.
+Here's what changed in the responsive section and why each breakpoint exists:
+1200px (xl) — Small desktop adjustments. Hero name shrinks slightly, avatar reduces to 250px. Nothing dramatic yet.
+992px (lg) — Laptops and landscape tablets. Hero padding reduces, tool cards get tighter spacing so 4 still fit in a row.
+768px (md) — This is the big one. The 2-column hero layout collapses to single column. Avatar moves above the text using order: -1 (this is the Bootstrap trick — no HTML changes needed). Stats stack vertically with horizontal dividers instead of vertical ones. Buttons center themselves.
+576px (sm) — Phones. Buttons stack vertically and go full-width for easy tapping. Tool cards switch from flex to a proper CSS grid with 2 columns so they stay neat.
+375px (xs) — iPhone SE and very old/small phones. Everything shrinks to its minimum readable size. Nothing breaks, just tighter.
+Every single line has a comment explaining exactly what it does and why!
+*/
+
+
+/* ============================================================
    GLOBAL STYLESHEET — Deep Navy + Electric Teal Portfolio
    ============================================================ */
 
@@ -79,6 +91,17 @@ footer {
 [data-testid="stSidebar"] .css-1d391kg {
     padding-top: 2rem;
     /* Add top padding inside sidebar for spacing */
+}
+
+/* ADD THESE NEW LINES BELOW 👇 */
+[data-testid="stSidebar"] a {
+    font-size: 1.5rem !important;
+    /* make sidebar link text bigger */
+}
+
+[data-testid="stSidebar"] span {
+    font-size: 1.5rem !important;
+    /* make sidebar label text bigger */
 }
 
 /* ============================================================
@@ -1027,74 +1050,548 @@ footer {
     /* Slight lift */
 }
 
+
 /* ============================================================
-   RESPONSIVE — Mobile-Friendly Adjustments
+   RESPONSIVE — Bootstrap-Inspired Multi-Breakpoint System
+   Breakpoints mirror Bootstrap: xl > lg > md > sm > xs
    ============================================================ */
 
-/* --- Mobile Breakpoint: 768px and below --- */
-@media (max-width: 768px) {
+
+/* ============================================================
+   BREAKPOINT 1 — Large Screens: max-width 1200px (Bootstrap xl)
+   Slight adjustments for smaller desktops and large laptops
+   ============================================================ */
+@media (max-width: 1200px) {
+
+    .hero-name {
+        font-size: 3rem;
+        /* Slightly reduce the huge hero name so it fits on smaller desktops */
+    }
+
+    .hero-container {
+        gap: 40px;
+        /* Reduce gap between text and avatar columns */
+    }
+
+    .avatar-circle {
+        width: 250px;
+        /* Slightly smaller avatar circle on large laptops */
+        height: 250px;
+        /* Keep width and height equal for perfect circle shape */
+    }
+
+    .tool-cards {
+        max-width: 900px;
+        /* Shrink tool cards grid slightly on large screens */
+    }
+}
+
+
+/* ============================================================
+   BREAKPOINT 2 — Medium-Large: max-width 992px (Bootstrap lg)
+   Tablets in landscape mode and small laptops
+   ============================================================ */
+@media (max-width: 992px) {
+
     .hero-section {
-        padding: 80px 20px 40px;
-        /* Reduce padding on mobile */
+        padding: 90px 30px 50px;
+        /* Reduce hero padding — less empty space on smaller screens */
+    }
+
+    .hero-name {
+        font-size: 2.6rem;
+        /* Smaller name heading so text doesn't overflow the column */
+    }
+
+    .hero-container {
+        gap: 30px;
+        /* Less gap between text and avatar on medium screens */
+    }
+
+    .hero-avatar {
+        flex: 0 0 260px;
+        /* Reduce avatar column fixed width on medium screens */
+    }
+
+    .avatar-circle {
+        width: 220px;
+        /* Smaller circle to fit within reduced column width */
+        height: 220px;
+        /* Always keep height = width to maintain circular shape */
+    }
+
+    .tool-cards {
+        gap: 16px;
+        /* Reduce spacing between tool cards to fit 4 in a row */
+        padding: 0 24px;
+        /* Less side padding on medium screens */
+    }
+
+    .tool-card {
+        min-width: 150px;
+        /* Allow cards to be slightly narrower on medium screens */
+        padding: 22px 16px;
+        /* Reduce card inner spacing to save space */
+    }
+
+    .section-heading {
+        font-size: 1.9rem;
+        /* Slightly smaller section headings on medium-large screens */
+    }
+
+    .cta-banner {
+        padding: 50px 30px;
+        /* Reduce banner padding on medium screens */
+    }
+
+    .cta-banner h2 {
+        font-size: 1.7rem;
+        /* Smaller banner heading on medium screens */
+    }
+}
+
+
+/* ============================================================
+   BREAKPOINT 3 — Tablets: max-width 768px (Bootstrap md)
+   Tablets in portrait mode — layout shifts from 2-column to 1-column
+   ============================================================ */
+@media (max-width: 768px) {
+
+    /* --- Navbar --- */
+    .hamburger {
+        display: block;
+        /* Show hamburger icon — desktop nav links are hidden on mobile */
+    }
+
+    .nav-links {
+        display: none;
+        /* Hide horizontal nav links — replaced by hamburger dropdown */
+    }
+
+    .mobile-menu.active {
+        display: flex;
+        /* Show vertical dropdown menu when hamburger is clicked */
+    }
+
+    /* --- Hero Section --- */
+    .hero-section {
+        padding: 80px 24px 40px;
+        /* Reduce top padding (navbar shorter) and side padding on tablet */
+        min-height: auto;
+        /* Remove full-height requirement — let content decide height */
     }
 
     .hero-container {
         flex-direction: column;
-        /* Stack columns vertically */
+        /* Stack text column and avatar column vertically (single column) */
+        align-items: center;
+        /* Center both columns horizontally when stacked */
         text-align: center;
-        /* Center-align text */
-    }
-
-    .hero-name {
-        font-size: 2.2rem;
-        /* Smaller heading on mobile */
-    }
-
-    .hero-buttons {
-        justify-content: center;
-        /* Center buttons */
-    }
-
-    .social-links {
-        justify-content: center;
-        /* Center social icons */
+        /* Center all text in the hero section */
+        gap: 32px;
+        /* Space between avatar and text when stacked vertically */
     }
 
     .hero-avatar {
+        order: -1;
+        /* Move avatar ABOVE the text — looks better on mobile/tablet */
         flex: 0 0 auto;
-        /* Remove fixed width */
-        margin-top: 30px;
-        /* Add space above avatar */
+        /* Remove fixed width so it sizes naturally */
+        width: 100%;
+        /* Take full row width */
+        justify-content: center;
+        /* Center the avatar circle horizontally */
     }
 
     .avatar-circle {
         width: 200px;
-        /* Smaller avatar on mobile */
+        /* Smaller circle on tablets — saves vertical space */
         height: 200px;
-        /* Match width for circle */
+        /* Keep equal to width for circular shape */
     }
 
+    .hero-text {
+        min-width: unset;
+        /* Remove minimum width — let text take full container width */
+        width: 100%;
+        /* Fill full available width */
+    }
+
+    .hero-name {
+        font-size: 2.2rem;
+        /* Smaller heading on tablet — fits single column width */
+    }
+
+    .hero-tagline {
+        font-size: 1rem;
+        /* Slightly smaller tagline text on tablet */
+        max-width: 520px;
+        /* Limit line length for readability in centered layout */
+        margin-left: auto;
+        /* Auto margins center the tagline block */
+        margin-right: auto;
+        /* Auto margins center the tagline block */
+    }
+
+    .role-tag {
+        font-size: 0.78rem;
+        /* Slightly smaller role tag text on tablet */
+        letter-spacing: 1.5px;
+        /* Reduce letter spacing to fit smaller size */
+    }
+
+    .hero-buttons {
+        justify-content: center;
+        /* Center the buttons horizontally in single-column layout */
+        gap: 12px;
+        /* Slightly less gap between buttons */
+    }
+
+    .hero-buttons .btn-primary,
+    .hero-buttons .btn-secondary {
+        padding: 11px 22px;
+        /* Slightly smaller button padding on tablet */
+        font-size: 0.9rem;
+        /* Smaller button text on tablet */
+    }
+
+    .social-links {
+        justify-content: center;
+        /* Center social icons when in stacked/centered layout */
+        gap: 16px;
+        /* Less gap between icons on tablet */
+    }
+
+    /* --- Stats Bar --- */
     .stats-bar {
         flex-direction: column;
-        /* Stack stats vertically */
+        /* Stack each stat item vertically instead of side by side */
+        align-items: center;
+        /* Center each stat block horizontally */
+        padding: 30px 20px;
+        /* Reduce outer padding on tablet */
+        gap: 0;
+        /* Remove gap — we'll use border-bottom for spacing instead */
     }
 
     .stat-item {
+        width: 100%;
+        /* Make each stat item full width when stacked */
         border-right: none;
-        /* Remove vertical dividers */
+        /* Remove vertical dividers — they don't make sense when stacked */
         border-bottom: 1px solid var(--border);
-        /* Add horizontal dividers instead */
-        padding-bottom: 20px;
-        /* Bottom padding */
+        /* Add horizontal line divider between each stacked stat */
+        padding: 20px 0;
+        /* Top and bottom padding for each stat row */
+        text-align: center;
+        /* Keep stat number and label centered */
     }
 
+    .stat-item:last-child {
+        border-bottom: none;
+        /* Remove divider after the last stat — no line at the very end */
+    }
+
+    .stat-number {
+        font-size: 2rem;
+        /* Slightly smaller number on tablet — still prominent */
+    }
+
+    /* --- Tool Cards --- */
     .tool-cards {
-        padding: 0 20px;
-        /* Less horizontal padding */
+        padding: 0 16px;
+        /* Less side padding so cards don't feel cramped */
+        gap: 14px;
+        /* Reduce gap between cards on tablet */
+    }
+
+    .tool-card {
+        min-width: 130px;
+        /* Allow cards to be narrower on tablet */
+        max-width: 160px;
+        /* Cap max width so 4 cards still fit in one row */
+        padding: 20px 12px;
+        /* Less inner padding on smaller cards */
+    }
+
+    .tool-icon {
+        font-size: 2rem;
+        /* Smaller icon inside tool card on tablet */
+    }
+
+    .tool-label {
+        font-size: 0.85rem;
+        /* Smaller label text in tool card on tablet */
+    }
+
+    /* --- Section Headings --- */
+    .section-heading {
+        font-size: 1.6rem;
+        /* Smaller section headings on tablet */
+        margin: 40px 0 28px;
+        /* Reduce top and bottom margin around headings */
+    }
+
+    /* --- CTA Banner --- */
+    .cta-banner {
+        padding: 40px 20px;
+        /* Less padding on tablet — banner feels balanced */
+    }
+
+    .cta-banner h2 {
+        font-size: 1.5rem;
+        /* Smaller banner heading on tablet */
+    }
+
+    /* --- Content Cards --- */
+    .content-card {
+        padding: 20px;
+        /* Reduce card inner padding on tablet */
+    }
+
+    /* --- About Profile Image --- */
+    .about-profile {
+        width: 200px;
+        /* Smaller profile image on tablet */
+        height: 200px;
+        /* Keep equal to width for circle */
+        display: block;
+        /* Block display to allow centering with margin */
+        margin: 0 auto 24px;
+        /* Center image horizontally and add bottom space */
+    }
+
+    /* --- Timeline --- */
+    .timeline {
+        padding-left: 30px;
+        /* Reduce left padding in timeline — saves screen width */
+    }
+}
+
+
+/* ============================================================
+   BREAKPOINT 4 — Mobile: max-width 576px (Bootstrap sm)
+   Standard smartphones in portrait mode
+   ============================================================ */
+@media (max-width: 576px) {
+
+    /* --- Hero Section --- */
+    .hero-section {
+        padding: 70px 16px 36px;
+        /* Minimal side padding — use every pixel on small phones */
+    }
+
+    .hero-name {
+        font-size: 1.9rem;
+        /* Smaller name heading on mobile phones */
+        line-height: 1.15;
+        /* Slightly looser line height to prevent letters overlapping */
+    }
+
+    .avatar-circle {
+        width: 160px;
+        /* Smaller avatar on phone — saves vertical space */
+        height: 160px;
+        /* Equal to width for circular shape */
+    }
+
+    .hero-tagline {
+        font-size: 0.95rem;
+        /* Smaller tagline on phones */
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        /* Stack buttons vertically on small phones */
+        align-items: center;
+        /* Center the stacked buttons */
+        gap: 10px;
+        /* Small gap between stacked buttons */
+    }
+
+    .hero-buttons .btn-primary,
+    .hero-buttons .btn-secondary {
+        width: 100%;
+        /* Make buttons full width when stacked — easy to tap */
+        max-width: 280px;
+        /* Cap max width so buttons don't stretch on wider phones */
+        text-align: center;
+        /* Center button text when full-width */
+        padding: 12px 20px;
+        /* Comfortable tap target padding */
+    }
+
+    /* --- Tool Cards — Switch to 2-Column Grid --- */
+    .tool-cards {
+        display: grid;
+        /* Switch from flex to CSS grid for precise 2-column layout */
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 equal columns — 2 cards per row on mobile */
+        padding: 0 12px;
+        /* Minimal side padding */
+        gap: 12px;
+        /* Small gap between grid cells */
+        max-width: 100%;
+        /* Use full available width */
+    }
+
+    .tool-card {
+        min-width: unset;
+        /* Remove min-width so grid controls sizing */
+        max-width: unset;
+        /* Remove max-width so grid controls sizing */
+        padding: 18px 10px;
+        /* Compact padding inside each card on mobile */
+    }
+
+    /* --- Section Headings --- */
+    .section-heading {
+        font-size: 1.4rem;
+        /* Smaller heading on mobile phones */
+        margin: 32px 0 20px;
+        /* Less spacing above and below headings */
+    }
+
+    /* --- Stats Bar --- */
+    .stat-number {
+        font-size: 1.8rem;
+        /* Smaller stat numbers on mobile */
+    }
+
+    .stat-label {
+        font-size: 0.82rem;
+        /* Smaller stat labels on mobile */
+    }
+
+    /* --- CTA Banner --- */
+    .cta-banner {
+        padding: 36px 16px;
+        /* Minimal banner padding on mobile */
+        margin-top: 40px;
+        /* Reduce top margin above banner */
+    }
+
+    .cta-banner h2 {
+        font-size: 1.3rem;
+        /* Smaller banner heading on mobile */
+        margin-bottom: 16px;
+        /* Less space between heading and button */
+    }
+
+    .cta-btn {
+        padding: 12px 24px;
+        /* Slightly smaller CTA button on mobile */
+        font-size: 0.95rem;
+        /* Slightly smaller CTA button text */
+    }
+
+    /* --- Content Cards --- */
+    .content-card {
+        padding: 16px;
+        /* Compact card padding on mobile */
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+        /* Smaller card titles on mobile */
+    }
+
+    /* --- Timeline --- */
+    .timeline {
+        padding-left: 24px;
+        /* Even less left padding on mobile phones */
+        margin: 24px 0;
+        /* Less top and bottom margin */
+    }
+
+    .timeline-card {
+        padding: 14px;
+        /* Compact timeline card on mobile */
+    }
+
+    .timeline-year {
+        font-size: 1rem;
+        /* Smaller year label on mobile */
+    }
+
+    /* --- About Profile --- */
+    .about-profile {
+        width: 160px;
+        /* Smaller profile image on mobile */
+        height: 160px;
+        /* Equal to width for circle shape */
+    }
+}
+
+
+/* ============================================================
+   BREAKPOINT 5 — Extra Small: max-width 375px (iPhone SE, older phones)
+   Very tight screens — keep everything compact and readable
+   ============================================================ */
+@media (max-width: 375px) {
+
+    .hero-name {
+        font-size: 1.6rem;
+        /* Very small heading on tiny screens */
+    }
+
+    .hero-tagline {
+        font-size: 0.88rem;
+        /* Very small tagline text on tiny screens */
+    }
+
+    .role-tag {
+        font-size: 0.7rem;
+        /* Very small role tag on tiny screens */
+        padding: 4px 10px;
+        /* Compact inner spacing */
+        letter-spacing: 1px;
+        /* Less letter spacing */
+    }
+
+    .avatar-circle {
+        width: 130px;
+        /* Smallest avatar size — fits very narrow screens */
+        height: 130px;
+        /* Equal to width for circle shape */
     }
 
     .section-heading {
+        font-size: 1.2rem;
+        /* Smallest heading size for very small screens */
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+        /* Smallest stat number on tiny phones */
+    }
+
+    .tool-cards {
+        gap: 8px;
+        /* Very tight gap between tool cards on tiny screens */
+        padding: 0 8px;
+        /* Minimal side padding */
+    }
+
+    .tool-icon {
         font-size: 1.6rem;
-        /* Smaller heading on mobile */
+        /* Smallest tool icon on tiny screens */
+        margin-bottom: 8px;
+        /* Less space below icon */
+    }
+
+    .tool-label {
+        font-size: 0.75rem;
+        /* Smallest tool label text on tiny screens */
+    }
+
+    .navbar {
+        padding: 12px 16px;
+        /* Tighter navbar padding on tiny screens */
+    }
+
+    .nav-logo {
+        font-size: 1.1rem;
+        /* Smaller logo text on tiny screens */
     }
 }

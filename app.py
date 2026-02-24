@@ -26,6 +26,9 @@ st.set_page_config(
 )
 
 
+# for switching the app.py main page into home page
+st.switch_page("pages/1_Home.py")
+
 # Build the base64 data URI for the profile image
 def load_profile_image(image_path, fallback_color="#132952"):
     """Load image and return complete data URI (not just raw base64)."""
@@ -44,7 +47,7 @@ def load_profile_image(image_path, fallback_color="#132952"):
 
 # --- Load Images ---
 # Load images from assets folder and convert to base64 for embedding
-profile_src = load_profile_image("assets/Profile.jpeg")
+profile_src = load_profile_image("assets/Profile.png")
 image1_src = load_profile_image("assets/the_sufi_post.png")
 image2_src = load_profile_image("assets/nishat.jpeg")
 image3_src = load_profile_image("assets/The_Sufi_Institute1.jpeg")

@@ -4,6 +4,7 @@
 # It includes the hero with animated avatar, stats strip, tool cards, and a CTA.
 # ============================================================
 
+import datetime
 import streamlit as st  # Import Streamlit for building the page UI
 import base64           # Import base64 for encoding the profile image to embed in HTML
 import os               # Import os for file path operations
@@ -20,17 +21,17 @@ def get_image_base64(image_path):
 # Set the browser tab title and icon for this specific page
 st.set_page_config(
     page_title="Home | Ambreen Abdul Raheem",  # Browser tab title for this page
-    page_icon="🏠",                             # Home emoji as favicon
+    page_icon="assets/Profile.png",                             # Home emoji as favicon
     layout="wide",                              # Full-width page layout
     initial_sidebar_state="expanded"           # Sidebar starts visible
 )
 
 # Build the base64 data URI for the profile image
 # This embeds the actual Profile.jpeg from assets/ into the HTML
-profile_img_path = "assets/Profile.jpeg"  # Path to the real profile photo
+profile_img_path = "assets/Profile.png"  # Path to the real profile photo
 if os.path.exists(profile_img_path):  # Check the image file exists
     profile_b64 = get_image_base64(profile_img_path)  # Encode image to base64
-    profile_src = f"data:image/jpeg;base64,{profile_b64}"  # Create data URI for HTML img src
+    profile_src = f"data:image/png;base64,{profile_b64}"  # Create data URI for HTML img src
 else:
     profile_src = "https://via.placeholder.com/280x280/132952/00D4C8?text=AR"  # Fallback placeholder
 
@@ -63,7 +64,7 @@ st.markdown(f"""
             <!-- Role label tag — small teal badge above the name -->
             <div class="role-tag">Data Analyst & Web App Developer</div>
             <!-- Hero name — large Playfair Display heading -->
-            <h1 class="hero-name">Ambreen<br>Abdul Raheem</h1>
+            <h1 style="font-family: 'Playfair Display', serif; font-size: 3rem; color: #FFFFFF; margin-bottom: 16px;">Ambreen Abdul Raheem</h1>
             <!-- Tagline — subtitle in Inter font, soft white color -->
             <p class="hero-tagline">Turning Data into Decisions | Power BI | Python | Web Apps</p>
             <!-- Font Awesome CDN for real social icons -->
@@ -86,6 +87,19 @@ st.markdown(f"""
             </div>
         </div>
     </div>
+</div>
+""", unsafe_allow_html=True)  # Render the hero HTML directly
+
+# Right Column: Bio paragraph text
+st.markdown("""
+<div style="flex: 1; min-width: 300px;">
+    <p class="bio-text">
+    I don't just analyze data — I transform it into decisions.
+    With 4+ years of experience across Power BI, Python, and Streamlit, 
+    I bridge the gap between raw numbers and real business impact. 
+    From Nishat Welfare Organization to global clients on Upwork, 
+    I build solutions that don't just look good — they work.
+    </p>
 </div>
 """, unsafe_allow_html=True)  # Render the hero HTML directly
 
