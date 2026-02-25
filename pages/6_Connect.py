@@ -32,6 +32,12 @@ def save_to_supabase(name, email, message):
     Send contact form data directly to Supabase REST API.
     Uses requests library only — no supabase module needed.
     """
+    # Check if secrets exist (prevents crash on Streamlit Cloud)
+    if "supabase" not in st.secrets:
+        st.error("❌ Configuration Error: Supabase secrets are missing.")
+        st.info("💡 If you are on Streamlit Cloud, please add your secrets in the App Settings dashboard.")
+        return False
+
     # Build the full URL to your contacts table
     url = st.secrets["supabase"]["url"] + "/rest/v1/contact"
 
