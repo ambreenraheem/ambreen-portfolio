@@ -273,7 +273,7 @@ footer {
 /* --- Hero Background with Dot-Grid Texture --- "From Home.py deleted"
    Full viewport height, Deep Navy with subtle teal dots overlay */
 .hero-section {
-    min-height: 100vh;
+    min-height: 70vh;
     /* Fill entire viewport height */
     background-color: var(--bg-primary);
     /* Deep Navy base color */

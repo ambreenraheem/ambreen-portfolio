@@ -16,35 +16,54 @@ def get_image_base64(image_path):
     with open(image_path, "rb") as img_file:          # Open image in binary mode
         return base64.b64encode(img_file.read()).decode()  # Encode and return as string
 
-# Build base64 data URI for the profile image from assets/Profile.jpeg
-profile_img_path = "assets/Profile.jpeg"  # Path to the actual profile photo
+
+# Build base64 data URI for the profile image from assets/Profile.png
+profile_img_path = "assets/Profile.png"  # Path to the actual profile photo
 if os.path.exists(profile_img_path):  # Verify the image exists
     profile_b64 = get_image_base64(profile_img_path)  # Encode to base64
-    profile_src = f"data:image/jpeg;base64,{profile_b64}"  # Create data URI
+    profile_src = f"data:image/png;base64,{profile_b64}"  # Create data URI
 else:
     profile_src = "https://via.placeholder.com/250x250/132952/00D4C8?text=AR"  # Fallback
 
-# Build base64 for BADSHAHKAREEM.png
-badshah_img_path = "assets/BADSHAHKAREEM.png"
-if os.path.exists(badshah_img_path):
-    badshah_b64 = get_image_base64(badshah_img_path)
-    badshah_src = f"data:image/png;base64,{badshah_b64}"
-else:
-    badshah_src = "https://via.placeholder.com/150"
+# Build the base64 data URI for the profile image
+def load_profile_image(image_path, fallback_color="#132952"):
+    """Load image and return complete data URI (not just raw base64)."""
+    if not os.path.exists(image_path):
+        return f"https://via.placeholder.com/280x280/{fallback_color[1:]}/00D4C8?text=IMG"
+    
+    ext = os.path.splitext(image_path)[1].lower()
+    mime_map = {".png": "image/png", ".jpg": "image/jpeg", 
+                ".jpeg": "image/jpeg", ".gif": "image/gif", ".webp": "image/webp"}
+    mime = mime_map.get(ext, "image/jpeg")  # Extension se correct MIME type
+    
+    with open(image_path, "rb") as img_file:
+        b64 = base64.b64encode(img_file.read()).decode("utf-8")
+    
+    return f"data:{mime};base64,{b64}"  # ✅ Complete data URI return ho raha hai  # Fallback placeholder
 
-# Build base64 for nishat.jpeg
-nishat_img_path = "assets/nishat.jpeg"
-if os.path.exists(nishat_img_path):
-    nishat_b64 = get_image_base64(nishat_img_path)
-    nishat_src = f"data:image/jpeg;base64,{nishat_b64}"
-else:
-    nishat_src = "https://via.placeholder.com/150"
+
+image1_path = "assets/BADSHAHKAREEM.png"
+image2_path = "assets/nishat.jpeg"
+image3_path = "assets/Kashif.jpg"
+image4_path = "assets/titli.jpg"
+image5_path = "assets/ned.jpeg"
+image6_path = "assets/crux.png"
+badshah_src = load_profile_image(image1_path)
+nishat_src = load_profile_image(image2_path)
+kashif_src = load_profile_image(image3_path)
+noureen_src = load_profile_image(image4_path)
+ned_src = load_profile_image(image5_path)
+crux_src = load_profile_image(image6_path)
+
+
+
+
 
 # --- Page Config ---
 # Configure browser tab title, icon, and layout for this page
 st.set_page_config(
     page_title="About | Ambreen Abdul Raheem",  # Browser tab title
-    page_icon="👩‍💼",                              # About page favicon
+    page_icon="assets/Profile.png",                              # About page favicon
     layout="wide",                               # Full-width layout
     initial_sidebar_state="expanded"            # Sidebar starts visible
 )
@@ -66,7 +85,12 @@ load_css()
 # ============================================================
 
 # Section heading — "About Me" in Playfair Display
-st.markdown('<h2 class="section-heading">About Me</h2>', unsafe_allow_html=True)
+st.markdown(f"""
+<div style="flex: 1; min-width: 300px;">
+    <!-- Hero name — large Playfair Display heading -->
+    <h4 style="font-family: 'Playfair Display', serif; text-align:center; font-size: 2rem; color: #FFFFFF; margin-bottom: 16px;">About Me</h4>
+</div>
+""", unsafe_allow_html=True)
 
 # Inject the two-column bio section HTML
 # Left: circular profile photo with teal glow border
@@ -105,188 +129,6 @@ st.markdown(f"""
 # --- Horizontal separator between bio and next section ---
 st.markdown("<hr style='border-color: #1E3A5F; margin: 40px 0;'>", unsafe_allow_html=True)
 
-# ============================================================
-# NOTE: Section 2 (Animated Skill Bars) — REMOVED
-# The skill bars section has been intentionally omitted
-# as per the user's request to remove Section 2.
-# ============================================================
-
-# ============================================================
-# SECTION 3: PROFESSIONAL JOURNEY TIMELINE
-# Vertical timeline with teal line, glowing dots, and navy cards
-# ============================================================
-
-# # Section heading — "My Journey" in Playfair Display
-# st.markdown('<h2 class="section-heading">My Journey</h2>', unsafe_allow_html=True)
-
-# # Inject the vertical timeline HTML structure
-# # Uses CSS classes from style.css: .timeline, .timeline-item, .timeline-year, .timeline-card
-# st.markdown("""
-# <div class="timeline" style="max-width: 800px; margin: 0 auto;">
-#     <!-- Timeline Entry 0: Graduation -->
-#     <div class="timeline-item">
-#         <!-- Year label in teal -->
-#         <div class="timeline-year">[2010] — Graduation</div>
-#         <!-- Navy card with description text -->
-#         <div class="timeline-card">
-#             <p class="card-desc">
-#                 🎓 My academic background includes a Bachelor of Arts (BA) and Bachelor of Education (B.Ed), and I began my career as a school teacher. I dedicated 15 years of my life to teaching with complete passion and commitment. Alongside my school job, I also ran home-based coaching classes, where my students achieved excellent results. Now that I’ve stepped into the field of data analysis, I bring the same dedication and consistency. For the past 4 years, I’ve been working hard with focus and determination, continuously updating and upgrading my skills to stay relevant and effective in this evolving field.
-            
-#             </p>
-#         </div>
-#     </div>
-#     <!-- Timeline Entry 1: Started as Data Analyst -->
-#     <div class="timeline-item">
-#         <!-- Year label in teal -->
-#         <div class="timeline-year">[2019] — Started as Data Analyst</div>
-#         <!-- Navy card with description text -->
-#         <div class="timeline-card">
-#             <p class="card-desc">
-#                 My turning point came during the COVID-19 pandemic:
-#                 During the COVID-19 pandemic, I paused teaching and joined Nishat Welfare Organization (NWO) as a Data Entry Specialist. That six-month opportunity became the foundation of my data journey.
-#                 🚀 It was during this time that <b>Mr. Pir Muhammad Sadiq</b>, Patron-in-Chief of <a href="https://nishatwelfare.org/">The Nishat Welfare Organization (NWO)</a>, highlighted the organization’s need for data professionals.
-#                 Inspired, I began exploring the field of data science.
-#                 <div style="display: flex; gap: 10px; margin-top: 15px; justify-content: center; flex-wrap: wrap;">
-#                     <img src="{badshah_src}" style="width: 150px; border-radius: 8px; border: 2px solid var(--accent); box-shadow: 0 4px 10px rgba(0,212,200,0.2);">
-#                     <img src="{nishat_src}" style="width: 150px; border-radius: 8px; border: 2px solid var(--accent); box-shadow: 0 4px 10px rgba(0,212,200,0.2);">
-#                 </div>
-#             </p>
-#         </div>
-#     </div>
-#     <!-- Timeline Entry 2: My Mentors -->
-#     <div class="timeline-item">
-#         <div class="timeline-year">[2020] — My Mentor: Dr. Kashif Hussain and TS Dr. Noureen Talpur.</div>
-#         <div class="timeline-card">
-#             <p class="card-desc">
-#                 I met Mr. Kashif Hussain, who introduced me to the world of data analytics. 
-#                 <b>Dr. Kashif Hussain</b> PhD in Machine Learning & Data Mining | AI/ML Researcher & Educator | UK Global Talent | BCS & ACM Member (a lecturer at Solent University, Southampton, and now he is at University of Roehampton, London, UK).
-#                 He is a passionate educator and researcher with a strong commitment to advancing knowledge in the field of machine learning and data mining. <a href="https://www.linkedin.com/in/kashif-talpur">Dr. Kashif Hussain</a>           
-#                 <b>TS Dr. Noureen Talpur</b> Lecturer | Professional Technologist | Researcher (Machine Learning & Data Science)(a lecturer in Universiti Teknologi PETRONAS, Ipoh, Perak, Malaysia) <a href="https://www.linkedin.com/in/noureen-talpur">TS Dr. Noureen Talpur</a>
-#                 I am sincerely grateful to both mentors for their continuous guidance and support throughout my professional journey.
-#                 Today, I stand as a confident Data Analyst with a strong foundation in data analytics and a growing specialization in machine learning and deep learning. I am deeply motivated to contribute meaningfully to the field of data science by delivering analytical solutions that drive informed decision-making.
-#                 I also take pride in being a critical thinker and a creative web developer, combining analytical precision with innovative problem-solving to build impactful, data-driven solutions.
-#             </p>
-#         </div>
-#     </div>
-#     <!-- Timeline Entry 3: Postgraduate Diploma (2024-2025) in "Data Science with Artificial Intelligence" -->
-#     <div class="timeline-item">
-#         <div class="timeline-year">[2024-2025] — Postgraduate Diploma in "Data Science with Artificial Intelligence"</div>
-#         <div class="timeline-card">
-#             <p class="card-desc">
-#                 I pursued a Postgraduate Diploma in "Data Science with Artificial Intelligence" at <a href="https://academy.neduet.edu.pk//">NED Academy</a>, affiliated with NED (Nadirshaw Edulji Dinshaw University of Engineering and Technology).
-#                 This program significantly enhanced my understanding of machine learning, deep learning, and advanced data analytics techniques.
-#                 I am pleased to share that I have successfully completed my postgraduate diploma, and I can confidently say that my journey throughout this program was truly outstanding and transformative.
-
-#                 During this PGD program, I completed the following modules:
-#                 1. Data Science with Python
-#                 2. Business Intelligence and Data Visualization
-#                 3. Machine Learning
-#                 4. Deep Learning
-#                 5. Fundamentals of Agentic AI
-#                 6. Capstone Project (Final Year Project)
-
-#                 This program provided me with a much deeper and more structured understanding of these domains. I worked on multiple practical projects that strengthened my applied skills, many of which are available for review on my GitHub profile.
-
-#                 And here, I got the opportunity to work with <b>Crux International Canada</b> and to deepen my understanding of Business Intelligence. Crux International Canada provides emerging talent and dedicated data analysts with valuable opportunities to grow and actively guides them throughout their projects.                
-#             </p>
-#         </div>
-#     </div>
-#     <!-- Timeline Entry 3: Started Freelancing on Upwork -->
-#     <div class="timeline-item">
-#         <div class="timeline-year">[2025] — Started Freelancing on Upwork</div>
-#         <div class="timeline-card">
-#             <p class="card-desc">
-#                 Launched freelance career on Upwork, offering data analysis and web development services to global clients. <a href="https://www.upwork.com/freelancers/~01d2856ced28d8eca8">Upwork</a> is a leading international freelancing platform. And I am proud to be a part of it.
-#             </p>
-#         </div>
-#     </div>
-#     <!-- Timeline Entry 4: Expanded into Web App Development -->
-#     <div class="timeline-item">
-#         <div class="timeline-year">[Year] — Expanded into Web App Development</div>
-#         <div class="timeline-card">
-#             <p class="card-desc">
-#                 Expanded skill set into web application development using
-#                 Streamlit, Python, and modern web technologies.
-#             </p>
-#         </div>
-#     </div>
-# </div>
-# """, unsafe_allow_html=True)  # Render timeline HTML
-
-# # --- Horizontal separator ---
-# st.markdown("<hr style='border-color: #1E3A5F; margin: 40px 0;'>", unsafe_allow_html=True)
-
-# # ============================================================
-# # SECTION 4: VALUES — "What I Stand For"
-# # Three cards in a row with teal top border accent
-# # ============================================================
-
-# # Section heading — "What I Stand For" in Playfair Display
-# st.markdown('<h2 class="section-heading">What I Stand For</h2>', unsafe_allow_html=True)
-
-# # Inject three values cards in a flex row
-# # Each card has a teal top border, navy background, and teal glow on hover
-# st.markdown("""
-# <div style="
-#     display: flex;
-#     justify-content: center;
-#     gap: 24px;
-#     flex-wrap: wrap;
-#     max-width: 1000px;
-#     margin: 0 auto;
-#     padding: 0 20px;
-# ">
-#     <!-- Value Card 1: Data-Driven -->
-#     <div class="content-card card-top-accent" style="flex: 1; min-width: 250px; max-width: 300px;">
-#         <!-- Card title — value name -->
-#         <h3 class="card-title" style="color: #00D4C8;">📊 Data-Driven</h3>
-#         <!-- Card description — value explanation -->
-#         <p class="card-desc">Every decision should be backed by data. I believe in letting
-#         numbers guide strategy and action.</p>
-#     </div>
-#     <!-- Value Card 2: Impact-Focused -->
-#     <div class="content-card card-top-accent" style="flex: 1; min-width: 250px; max-width: 300px;">
-#         <h3 class="card-title" style="color: #00D4C8;">🎯 Impact-Focused</h3>
-#         <p class="card-desc">Solutions that make a real difference. I focus on delivering
-#         work that creates measurable impact.</p>
-#     </div>
-#     <!-- Value Card 3: Continuous Learning -->
-#     <div class="content-card card-top-accent" style="flex: 1; min-width: 250px; max-width: 300px;">
-#         <h3 class="card-title" style="color: #00D4C8;">📚 Continuous Learning</h3>
-#         <p class="card-desc">Always growing and upskilling. Technology evolves rapidly,
-#         and I stay ahead by continuous learning.</p>
-#     </div>
-# </div>
-# """, unsafe_allow_html=True)  # Render values cards HTML
-
-# # --- Horizontal separator ---
-# st.markdown("<hr style='border-color: #1E3A5F; margin: 40px 0;'>", unsafe_allow_html=True)
-
-# # ============================================================
-# # SECTION 5: REFERENCES & RESOURCES
-# # Simple placeholder section for the owner to fill with names,
-# # books, YouTube channels, and links that helped them grow.
-# # ============================================================
-
-# # Section heading — "People & Resources That Helped Me"
-# st.markdown('<h2 class="section-heading">People & Resources That Helped Me</h2>', unsafe_allow_html=True)
-
-# # Placeholder card — owner will add actual references here
-# st.markdown("""
-# <div class="content-card" style="max-width: 800px; margin: 0 auto; text-align: center;">
-#     <!-- Placeholder text — owner replaces with real references -->
-#     <p class="card-desc" style="font-size: 1.1rem;">
-#         [Owner will add references here — mentors, books, YouTube channels,
-#         courses, and resources that helped along the journey]
-#     </p>
-# </div>
-# """, unsafe_allow_html=True)  # Render references placeholder
-
-
-import streamlit as st
-import base64
-from pathlib import Path
-
 # ─── Helper: convert image file to base64 src string ───────────────────────
 def img_to_base64(image_path: str) -> str:
     """
@@ -302,12 +144,7 @@ def img_to_base64(image_path: str) -> str:
         return f"data:image/{ext};base64,{encoded}"
     return ""   # file nahi mili to blank return karo
 
-# ─── Image paths (owner apni actual files yahan rakh ke paths update kare) ──
-# assets/ folder mein yeh dono images rakho:
-#   assets/badshah.jpg   ←  Mr. Pir Muhammad Sadiq ki photo
-#   assets/nishat.jpg    ←  Nishat Welfare Organization ka logo / photo
-# badshah_src = img_to_base64("assets/badshah.jpg")
-# nishat_src  = img_to_base64("assets/nishat.jpg")
+
 
 # ─── Timeline HTML ───────────────────────────────────────────────────────────
 timeline_html = f"""
@@ -369,7 +206,7 @@ timeline_html = f"""
 <div class="timeline" style="max-width: 800px; margin: 0 auto;">
 <!-- ── Entry 0: Graduation ─────────────────────────── -->
 <div class="timeline-item">
-    <div class="timeline-year">[2010] — Graduation</div>
+    <div class="timeline-year"><h3>[2010] — Graduation</h3></div>
     <div class="timeline-card">
         <p class="card-desc">
         🎓 My academic background includes a Bachelor of Arts (BA) and Bachelor of Education (B.Ed), and I began my career as a school teacher. I dedicated 15 years of my life to teaching with complete passion and commitment. Alongside my school job, I also ran home-based coaching classes, where my students achieved excellent results. Now that I’ve stepped into the field of data analysis, I bring the same dedication and consistency. For the past 4 years, I’ve been working hard with focus and determination, continuously updating and upgrading my skills to stay relevant and effective in this evolving field.
@@ -379,25 +216,47 @@ timeline_html = f"""
 
 <!-- ── Entry 1: Started as Data Analyst ─────────────────────────── -->
 <div class="timeline-item">
-  <div class="timeline-year">[2019] — Started as Data Analyst</div>
+  <div class="timeline-year"><h3>[2019] — Started as Data Analyst</h3></div>
   <div class="timeline-card">
     <p class="card-desc">
       My turning point came during the COVID-19 pandemic.
       I paused teaching and joined Nishat Welfare Organization (NWO) as a Data Entry Specialist.
       That six-month opportunity became the foundation of my data journey.
-      <br><br>
-      🚀 It was during this time that <b>Mr. Pir Muhammad Sadiq</b>,
+      <br>
+      🚀 It was during this time that <b>His Excellency Pir Muhammad Sadiq Qureshi</b>,
       Patron-in-Chief of
       <a href="https://nishatwelfare.org/" target="_blank">The Nishat Welfare Organization (NWO)</a>,
       highlighted the organization's need for data professionals.
       Inspired, I began exploring the field of data science.
     </p>
+    <!-- Images row — shown side by side after the text -->
+    <!-- image of badshah kareem and nishat welfare organization -->
+    <div style="display: flex; gap: 40px; margin-top: 20px; flex-wrap: wrap;object-fit: center;">
+        <!-- Badshah Kareem image -->
+        <img src="{badshah_src}" 
+             alt="His Highness Pir Muhammad Sadiq Qureshi" 
+             style="width: 300px; 
+                    height: 600px; 
+                    object-fit: cover; 
+                    border-radius: 10px; 
+                    border: 2px solid #1E3A5F;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+        <!-- Nishat Welfare Organization image -->
+        <img src="{nishat_src}" 
+             alt="Nishat Welfare Organization" 
+             style="width: 300px; 
+                    height: 300px; 
+                    object-fit: cover; 
+                    border-radius: 10px; 
+                    border: 2px solid #1E3A5F;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+    </div>
   </div>
 </div>
 
 <!-- ── Entry 2: My Mentors ───────────────────────────────────────── -->
 <div class="timeline-item">
-  <div class="timeline-year">[2020] — My Mentors: Dr. Kashif Hussain &amp; TS Dr. Noureen Talpur</div>
+  <div class="timeline-year"><h3>[2020] — My Mentors: Dr. Kashif Hussain &amp; TS Dr. Noureen Talpur</h3></div>
   <div class="timeline-card">
     <p class="card-desc">
       I met <b>Dr. Kashif Hussain</b> — PhD in Machine Learning &amp; Data Mining | AI/ML Researcher &amp; Educator |
@@ -414,12 +273,33 @@ timeline_html = f"""
       Today, I stand as a confident Data Analyst with a strong foundation in data analytics and a growing specialization
       in machine learning and deep learning.
     </p>
+    <!-- images of kashif and noureen -->
+    <div style="display: flex; gap: 40px; margin-top: 20px; flex-wrap: wrap;">
+        <!-- Kashif Hussain image -->
+        <img src="{kashif_src}" 
+             alt="Dr. Kashif Hussain" 
+             style="width: 250px; 
+                    height: 250px; 
+                    object-fit: cover; 
+                    border-radius: 10px; 
+                    border: 2px solid #1E3A5F;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+        <!-- Dr. Noureen Talpur image -->
+        <img src="{noureen_src}" 
+             alt="Dr. Noureen Talpur" 
+             style="width: 250px; 
+                    height: 250px; 
+                    object-fit: cover; 
+                    border-radius: 10px; 
+                    border: 2px solid #1E3A5F;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+    </div>
   </div>
 </div>
 
 <!-- ── Entry 3: Postgraduate Diploma ────────────────────────────── -->
 <div class="timeline-item">
-  <div class="timeline-year">[2024–2025] — Postgraduate Diploma in "Data Science with Artificial Intelligence"</div>
+  <div class="timeline-year"><h3>[2024-2025] — Postgraduate Diploma in "Data Science with Artificial Intelligence"</h3></div>
   <div class="timeline-card">
     <p class="card-desc">
       I pursued a Postgraduate Diploma in <i>Data Science with Artificial Intelligence</i> at
@@ -439,12 +319,30 @@ timeline_html = f"""
       I also had the opportunity to work with <b>Crux International Canada</b>, which provided hands-on
       Business Intelligence experience and guided me throughout my projects.
     </p>
+<!-- image of ned and crux -->
+    <div style="display: flex; gap: 40px; margin-top: 20px; flex-wrap: wrap;">
+    <img src="{ned_src}" 
+             alt="NED University of Engineering and Technology" 
+             style="width: 400px; 
+                    height: 200px; 
+                    object-fit: cover; 
+                    border-radius: 10px; 
+                    border: 2px solid #1E3A5F;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+    <img src="{crux_src}" 
+             alt="Crux International Canada" 
+             style="width: 200px; 
+                    height: 200px; 
+                    object-fit: cover; 
+                    border-radius: 10px; 
+                    border: 2px solid #1E3A5F;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
   </div>
 </div>
 
 <!-- ── Entry 4: Started Freelancing on Upwork ───────────────────── -->
 <div class="timeline-item">
-  <div class="timeline-year">[2025] — Started Freelancing on Upwork</div>
+  <div class="timeline-year"><h3>[2025] — Started Freelancing on Upwork</h3></div>
   <div class="timeline-card">
     <p class="card-desc">
       Launched freelance career on
@@ -461,7 +359,7 @@ timeline_html = f"""
 
 <!-- ── Entry 5: Expanded into Web App Development ───────────────── -->
 <div class="timeline-item">
-  <div class="timeline-year">[2025] — Expanded into Web App Development</div>
+  <div class="timeline-year"><h3>[2025] — Expanded into Web App Development</h3></div>
   <div class="timeline-card">
     <p class="card-desc">
       Expanded skill set into web application development using

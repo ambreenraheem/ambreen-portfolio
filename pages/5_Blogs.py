@@ -31,7 +31,12 @@ load_css()
 # ============================================================
 
 # Main heading — "Blogs & Sessions" styled with Playfair Display
-st.markdown('<h2 class="section-heading">Blogs & Sessions</h2>', unsafe_allow_html=True)
+st.markdown(f"""
+<div style="flex: 1; min-width: 300px;">
+    <!-- Hero name — large Playfair Display heading -->
+    <h4 style="font-family: 'Playfair Display', serif; text-align:center; font-size: 2rem; color: #FFFFFF; margin-bottom: 16px;">Blogs & Sessions</h4>
+</div>
+""", unsafe_allow_html=True)
 
 # ============================================================
 # SUBSECTION 1: SESSIONS I CONDUCTED

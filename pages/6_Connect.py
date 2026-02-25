@@ -1,154 +1,138 @@
 # ============================================================
 # 6_Connect.py — Connect / Contact Page
-# Contact form (Name, Email, Message) that sends via smtplib + Gmail SMTP.
-# Uses st.secrets for email credentials. Social links row at bottom.
+# Uses requests library instead of supabase — works on Python 3.13
 # ============================================================
 
-import streamlit as st  # Import Streamlit framework
-import smtplib           # Built-in Python library for sending emails via SMTP protocol
-from email.mime.text import MIMEText        # Create plain text email message objects
-from email.mime.multipart import MIMEMultipart  # Create multipart email messages (for headers)
-
+import streamlit as st   # Streamlit framework
+import requests          # Built-in HTTP library — no extra install needed
 # --- Page Config ---
-# Configure browser tab title, icon, and layout for this page
 st.set_page_config(
-    page_title="Connect | Ambreen Abdul Raheem",  # Browser tab title
-    page_icon="📬",                                 # Mailbox emoji favicon
-    layout="wide",                                  # Full-width layout
-    initial_sidebar_state="expanded"            # Sidebar starts visible by default
+    page_title="Connect | Ambreen Abdul Raheem",
+    page_icon="📬",
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 def load_css():
-    """Load the global CSS file for consistent styling across all pages."""
+    """Load global CSS for consistent styling."""
     try:
-        with open("assets/style.css", "r") as f:  # Open global stylesheet
-            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)  # Inject CSS
+        with open("assets/style.css", "r") as f:
+            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
     except FileNotFoundError:
-        pass  # Continue if CSS file is missing
+        pass
 
-# Apply global CSS styles
-load_css()
-
-# ============================================================
-# PAGE HEADING
-# ============================================================
-
-# Main heading — "Get In Touch" in Playfair Display
-st.markdown('<h2 class="section-heading">Get In Touch</h2>', unsafe_allow_html=True)
+load_css()  # Apply styles
 
 # ============================================================
-# CONTACT FORM — Styled Navy Card with Teal Focused Borders
+# SUPABASE CONNECTION — Using requests (no supabase library)
 # ============================================================
 
-# Center the form in a navy card container with max width
-st.markdown("""
-<div style="max-width: 600px; margin: 0 auto;">
-""", unsafe_allow_html=True)  # Open the centered container div
+def save_to_supabase(name, email, message):
+    """
+    Send contact form data directly to Supabase REST API.
+    Uses requests library only — no supabase module needed.
+    """
+    # Build the full URL to your contacts table
+    url = st.secrets["supabase"]["url"] + "/rest/v1/contact"
 
-# --- Contact Form using Streamlit's st.form ---
-# st.form groups inputs together and submits them all at once
-with st.form("contact_form", clear_on_submit=True):  # Clear inputs after successful submit
-    # Name input field — single-line text input
-    name = st.text_input(
-        "Your Name",                # Label displayed above the input field
-        placeholder="Enter your name"  # Grey placeholder text inside the field
-    )
-    # Email input field — single-line text input
-    email = st.text_input(
-        "Your Email",               # Label displayed above the input
-        placeholder="Enter your email address"  # Placeholder text
-    )
-    # Message textarea — multi-line text input for the message body
-    message = st.text_area(
-        "Your Message",             # Label displayed above the textarea
-        placeholder="Write your message here...",  # Placeholder text
-        height=150                  # Height of the textarea in pixels
-    )
-    # Submit button — styled via CSS as teal button with navy text
-    submitted = st.form_submit_button("Send Message")  # Returns True when clicked
+    # Get the anon key from secrets
+    key = st.secrets["supabase"]["key"]
 
-    # --- Handle Form Submission ---
-    if submitted:  # Check if the submit button was clicked
-        # Validate that all fields are filled in
-        if name and email and message:  # All three fields must be non-empty
-            try:
-                # Attempt to read email credentials from Streamlit secrets
-                # These are stored in .streamlit/secrets.toml (NOT committed to GitHub)
-                sender_email = st.secrets["email"]["sender"]     # Sender email address
-                sender_password = st.secrets["email"]["password"]  # App-specific password
-                receiver_email = st.secrets["email"]["receiver"]   # Receiver email address
+    # Required headers for Supabase REST API
+    headers = {
+        "apikey": key,                       # API key header
+        "Authorization": f"Bearer {key}",    # Bearer token for auth
+        "Content-Type": "application/json",  # We are sending JSON data
+        "Prefer": "return=minimal"           # Don't return the inserted row
+    }
 
-                # Create the email message object (multipart for headers + body)
-                msg = MIMEMultipart()                   # Initialize empty email message
-                msg['From'] = sender_email              # Set the From header
-                msg['To'] = receiver_email              # Set the To header
-                msg['Subject'] = f"Portfolio Contact: {name}"  # Subject line with sender's name
+    # Data to insert into the table
+    data = {
+        "name": name,        # Name column
+        "email": email,      # Email column
+        "message": message   # Message column
+    }
 
-                # Build the email body text with all form fields
-                body = f"""
-New message from your portfolio contact form:
+    # Send POST request to Supabase
+    response = requests.post(url, json=data, headers=headers)
 
-Name: {name}
-Email: {email}
-Message: {message}
-                """
-                msg.attach(MIMEText(body, 'plain'))     # Attach body as plain text
-
-                # Connect to Gmail SMTP server and send the email
-                server = smtplib.SMTP('smtp.gmail.com', 587)  # Connect to Gmail on port 587
-                server.starttls()                       # Upgrade connection to TLS encryption
-                server.login(sender_email, sender_password)  # Authenticate with Gmail
-                server.send_message(msg)                # Send the email
-                server.quit()                           # Close the SMTP connection
-
-                # Show success message to the user
-                st.success("Thank you! Your message has been sent. ✅")
-
-            except KeyError:
-                # st.secrets doesn't have the required email keys
-                # This means .streamlit/secrets.toml is missing or misconfigured
-                st.warning("Email not configured. Please set up .streamlit/secrets.toml")
-                # Still show the message that was attempted so owner can see it
-                st.info(f"Message from {name} ({email}): {message}")
-
-            except Exception as e:
-                # Catch any other errors (network, auth, etc.)
-                st.error(f"Failed to send message: {str(e)}")
-        else:
-            # One or more fields were left empty
-            st.warning("Please fill in all fields before submitting.")
-
-# Close the centered container div
-st.markdown("</div>", unsafe_allow_html=True)
-
-# --- Horizontal separator before social links ---
-st.markdown("<hr style='border-color: #1E3A5F; margin: 40px 0;'>", unsafe_allow_html=True)
+    # Return True if successfully inserted (status 201)
+    return response.status_code == 201
 
 # ============================================================
-# SOCIAL LINKS ROW — Repeated at the bottom of the Connect page
-# Owner replaces "#" with real profile URLs
+# PAGE CONTENT — TWO COLUMN LAYOUT
 # ============================================================
 
-# Social links heading
-st.markdown("""
-<h3 style="
-    font-family: 'Playfair Display', serif;
-    color: #FFFFFF;
-    font-size: 1.3rem;
-    text-align: center;
-    margin-bottom: 20px;
-">Find Me Online</h3>
-""", unsafe_allow_html=True)  # Render heading
+col1, col2 = st.columns([1, 1], gap="large")
 
-# Row of social media links — centered, teal on hover
-st.markdown("""
-<div class="social-links" style="justify-content: center; gap: 30px; margin-bottom: 40px;">
-    <!-- Each link: emoji + platform name, owner replaces # with real URL -->
-    <a href="#" title="Upwork" style="font-size: 1.1rem;">💼 Upwork</a>
-    <a href="#" title="LinkedIn" style="font-size: 1.1rem;">🔗 LinkedIn</a>
-    <a href="#" title="GitHub" style="font-size: 1.1rem;">💻 GitHub</a>
-    <a href="#" title="YouTube" style="font-size: 1.1rem;">🎬 YouTube</a>
-    <a href="#" title="Facebook" style="font-size: 1.1rem;">📘 Facebook</a>
-    <a href="#" title="Nishat Welfare Organization" style="font-size: 1.1rem;">🏢 Nishat Welfare</a>
+with col1:
+# ============================================================
+# SOCIAL LINKS (Left Side)
+# ============================================================
+    st.markdown(f"""
+    <h3 style="font-family: 'Playfair Display', serif; color: #FFFFFF;
+               font-size: 1.5rem; text-align: left; margin-bottom: 20px;">
+        Connect & Collaborate
+    </h3>
+    <p style="font-size: 1.1rem; color: #E0E0E0; line-height: 1.6; text-align: left;">
+        Hi, I'm <strong>Ambreen Abdul Raheem</strong>. I specialize in bridging the gap between complex data challenges and actionable AI solutions. 
+        Whether you need <strong>end-to-end web application development</strong>, <strong>advanced data analytics</strong>, or <strong>custom machine learning models</strong>, 
+        I am here to help you turn your vision into reality. Let's connect to discuss how we can drive meaningful impact together.
+    </p>
+    <div style="margin: 25px 0;">
+        <h4 style="color: #00D4C8; font-family: 'Inter', sans-serif; font-size: 1.2rem;">Services Offered:</h4>
+        <ul style="color: #E0E0E0; font-size: 1rem; line-height: 1.5;">
+            <li>Custom Web App Development (Python, Streamlit, React)</li>
+            <li>Advanced Data Visualization & Business Intelligence</li>
+            <li>Machine Learning & Predictive Modeling</li>
+            <li>API Integration & Backend Optimization</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    # ============================================================
+    # CONTACT FORM (Right Side)
+    # ============================================================
+    st.markdown("""
+    <h3 style="font-family: 'Playfair Display', serif; text-align:left; font-size: 1.5rem; color: #FFFFFF; margin-bottom: 20px;">
+        Get In Touch
+    </h3>
+    """, unsafe_allow_html=True)
+
+    with st.form("contact_form", clear_on_submit=True):   # Clear fields after submit
+        name    = st.text_input("Your Name",    placeholder="Enter your name")             # Name field
+        email   = st.text_input("Your Email",   placeholder="Enter your email address")    # Email field
+        message = st.text_area("Your Message",  placeholder="Write your message here...",  # Message field
+                               height=150)
+        submitted = st.form_submit_button("Send Message")   # Submit button
+
+        if submitted:                           # When button is clicked
+            if name and email and message:      # All fields must be filled
+                success = save_to_supabase(name, email, message)   # Send to Supabase
+                if success:
+                    st.success("✅ Thank you! Your message has been received.")
+                else:
+                    st.error("❌ Something went wrong. Please try again.")
+            else:
+                st.warning("⚠️ Please fill in all fields before submitting.")
+
+# --- Bottom Divider ---
+st.markdown("<hr style='border-color: #1E3A5F; margin: 20px 0 10px 0;'>", unsafe_allow_html=True)
+
+# ============================================================
+# SOCIAL LINKS (Bottom Centered)
+# ============================================================
+st.markdown(f"""
+<div style="text-align: center; width: 100%;">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Social media icon links row — Centered at bottom -->
+    <div class="social-links" style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 30px; align-items: center; justify-content: center; width: 100%; margin-top: 10px;">
+        <a href="https://www.upwork.com/freelancers/~01d2856ced28d8eca8?s=1110580752008335360" target="_blank" title="Upwork"><i class="fa-brands fa-upwork"></i> Upwork</a>
+        <a href="https://www.linkedin.com/in/ambreen-abdul-raheem-122509300/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+        <a href="https://github.com/Ambreen-AbdulRaheem" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i> GitHub</a>
+        <a href="https://www.youtube.com/@AmbreenAbdulRaheem-y8m" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i> YouTube</a>
+        <a href="https://www.facebook.com/profile.php?id=61557898913923" target="_blank" title="Facebook"><i class="fa-brands fa-facebook"></i> Facebook</a>
+    </div>
 </div>
-""", unsafe_allow_html=True)  # Render social links row
+""", unsafe_allow_html=True)

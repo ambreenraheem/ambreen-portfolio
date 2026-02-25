@@ -32,7 +32,12 @@ load_css()
 # ============================================================
 
 # Main heading — "Certificates" styled with Playfair Display font
-st.markdown('<h2 class="section-heading">Certificates</h2>', unsafe_allow_html=True)
+st.markdown(f"""
+<div style="flex: 1; min-width: 300px;">
+    <!-- Hero name — large Playfair Display heading -->
+    <h4 style="font-family: 'Playfair Display', serif; text-align:center; font-size: 2rem; color: #FFFFFF; margin-bottom: 16px;">Certificates</h4>
+</div>
+""", unsafe_allow_html=True)
 
 # ============================================================
 # CERTIFICATE GALLERY — 3 per row from assets/certificates/

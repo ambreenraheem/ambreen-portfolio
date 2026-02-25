@@ -55,7 +55,15 @@ st.markdown("""
 # PAGE HEADING
 # ============================================================
 
-st.markdown('<h2 class="section-heading">My Projects</h2>', unsafe_allow_html=True)
+st.markdown("""
+<h3 style="
+    font-family: 'Playfair Display', serif;
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    margin: 30px 0 20px;
+    text-align: center;
+">My Projects</h3>
+""", unsafe_allow_html=True)
 
 # ============================================================
 # SUBSECTION 1: POWER BI PROJECTS

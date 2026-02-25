@@ -1,3 +1,5 @@
 # Required Python packages for the portfolio app
 streamlit        # Web framework for building the multi-page portfolio
 Pillow           # Image processing library for handling profile and certificate images
+supabase==2.3.0        # Supabase Python client
+requests

@@ -66,7 +66,7 @@ st.markdown(f"""
             <!-- Hero name — large Playfair Display heading -->
             <h1 style="font-family: 'Playfair Display', serif; font-size: 3rem; color: #FFFFFF; margin-bottom: 16px;">Ambreen Abdul Raheem</h1>
             <!-- Tagline — subtitle in Inter font, soft white color -->
-            <p class="hero-tagline">Turning Data into Decisions | Power BI | Python | Web Apps</p>
+            <p><h5 class="hero-tagline">Turning Data into Decisions | Power BI | Python | Web Apps</h5></p>
             <!-- Font Awesome CDN for real social icons -->
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
             <!-- Social media icon links row — teal on hover -->
