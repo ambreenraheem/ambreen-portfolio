@@ -91,15 +91,17 @@ st.markdown(f"""
 """, unsafe_allow_html=True)  # Render the hero HTML directly
 
 # Right Column: Bio paragraph text
-st.markdown("""
+st.markdown(f"""
 <div style="flex: 1; min-width: 300px;">
-    <p class="bio-text">
-    I don't just analyze data — I transform it into decisions.
+    <!-- Hero name — large Playfair Display heading -->
+    <h4 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: #FFFFFF; margin-bottom: 16px; text_align:center; justify-content:center;">Welcome to my portfolio</h4>
+    <h5>I don't just analyze data, I transform it into decisions.
+    <br>
     With 4+ years of experience across Power BI, Python, and Streamlit, 
-    I bridge the gap between raw numbers and real business impact. 
+    I bridge the gap between raw numbers and real business impact.
+    <br>
     From Nishat Welfare Organization to global clients on Upwork, 
-    I build solutions that don't just look good — they work.
-    </p>
+    I build solutions that don't just look good — they work.</h5>
 </div>
 """, unsafe_allow_html=True)  # Render the hero HTML directly
 
