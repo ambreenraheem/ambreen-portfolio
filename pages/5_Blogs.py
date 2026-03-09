@@ -162,7 +162,7 @@ st.markdown("""
     <p class="card-desc">
         Give your child the joy of discovering science through interactive digital learning. 📚✨
     </p>
-    <a href="#" style="color: #00D4C8; text-decoration: none; font-size: 0.9rem;">
+    <a href="https://science-e-book-01.streamlit.app/" style="color: #00D4C8; text-decoration: none; font-size: 0.9rem;">
         Read & Explore: From Here →
     </a>
 </div>
