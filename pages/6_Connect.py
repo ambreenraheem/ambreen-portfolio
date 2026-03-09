@@ -96,8 +96,8 @@ with col1:
             <li>Machine Learning & Predictive Modeling</li>
             <li>API Integration & Backend Optimization</li>
         </ul>
-        Email: ambreen.upwork.27@gmail.com
-        Email: ambreen.a.raheem@outlook.com
+        <h5 style="color: #00D4C8; font-family: 'Inter', sans-serif; font-size: 1.2rem;">Email: ambreen.upwork.27@gmail.com:</h5>
+        <h5 style="color: #00D4C8; font-family: 'Inter', sans-serif; font-size: 1.2rem;">Email: Email: ambreen.a.raheem@outlook.com:</h5>
     </div>
     """, unsafe_allow_html=True)
 
