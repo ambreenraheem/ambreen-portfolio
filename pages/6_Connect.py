@@ -63,7 +63,8 @@ def save_to_supabase(name, email, message):
 
     # Send POST request to Supabase
     response = requests.post(url, json=data, headers=headers)
-
+    st.write("Status:", response.status_code)
+    st.write("Response:", response.text)
     # Return True if successfully inserted (status 201)
     return response.status_code == 201
 
