@@ -96,6 +96,8 @@ with col1:
             <li>Machine Learning & Predictive Modeling</li>
             <li>API Integration & Backend Optimization</li>
         </ul>
+        Email: ambreen.upwork.27@gmail.com
+        Email: ambreen.a.raheem@outlook.com
     </div>
     """, unsafe_allow_html=True)
 
