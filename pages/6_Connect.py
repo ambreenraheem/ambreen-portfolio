@@ -4,7 +4,9 @@
 # ============================================================
 
 import streamlit as st   # Streamlit framework
-import requests          # Built-in HTTP library — no extra install needed
+import requests
+
+# Built-in HTTP library — no extra install needed
 # --- Page Config ---
 st.set_page_config(
     page_title="Connect | Ambreen Abdul Raheem",
