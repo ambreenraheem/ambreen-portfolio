@@ -41,7 +41,7 @@ def save_to_supabase(name, email, message):
         return False
 
     # Build the full URL to your contacts table
-    url = st.secrets["supabase"]["url"] + "/rest/v1/contact"
+    url = st.secrets["supabase"]["url"] + "/rest/v1/Connect"
 
     # Get the anon key from secrets
     key = st.secrets["supabase"]["key"]
